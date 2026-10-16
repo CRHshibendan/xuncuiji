@@ -61,10 +61,32 @@ const App = {
           n.classList.toggle('active', n.dataset.module === module);
         });
         this.updateNavBall();
+        this.updateSideBall();
       });
     });
     this.updateNavBall();
-    window.addEventListener('resize', () => this.updateNavBall());
+    this.updateSideBall();
+    window.addEventListener('resize', () => { this.updateNavBall(); this.updateSideBall(); });
+  },
+
+  // 桌面端：把白球和轨道对齐到侧边栏 active 项
+  updateSideBall() {
+    const sideNav = document.getElementById('sideNav');
+    if (!sideNav) return;
+    const items = sideNav.querySelectorAll('.nav-item');
+    const active = sideNav.querySelector('.nav-item.active');
+    const indicator = sideNav.querySelector('.side-indicator');
+    if (!items.length || !active || !indicator) return;
+    const navRect = sideNav.getBoundingClientRect();
+    const first = items[0].getBoundingClientRect();
+    const last = items[items.length - 1].getBoundingClientRect();
+    const act = active.getBoundingClientRect();
+    const trackTop = first.top - navRect.top - 8;
+    const trackH = last.bottom - first.top + 16;
+    const ballY = act.top - navRect.top + act.height / 2;
+    indicator.style.setProperty('--track-top', trackTop + 'px');
+    indicator.style.setProperty('--track-h', trackH + 'px');
+    indicator.style.setProperty('--side-ball-y', ballY + 'px');
   },
 
   // 把白球和悬浮内容（图标+文字）移动到当前 active 导航项中心
@@ -124,6 +146,7 @@ const App = {
           n.classList.toggle('active', n.dataset.module === 'learn');
         });
         this.updateNavBall();
+        this.updateSideBall();
         LearnModule.selectTool(id);
         document.querySelectorAll('.learn-tool-chip').forEach(c => {
           c.classList.toggle('active', c.dataset.id === id);
