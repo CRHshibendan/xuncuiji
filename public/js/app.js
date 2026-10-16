@@ -71,11 +71,18 @@ const App = {
     const bottomNav = document.getElementById('bottomNav');
     const active = bottomNav.querySelector('.nav-item.active');
     const ball = bottomNav.querySelector('.nav-ball');
+    const track = bottomNav.querySelector('.nav-track');
     if (!active || !ball) return;
     const navRect = bottomNav.getBoundingClientRect();
     const itemRect = active.getBoundingClientRect();
     const centerX = itemRect.left - navRect.left + itemRect.width / 2;
     ball.style.left = centerX + 'px';
+    // 轨道凹口位置：相对轨道宽度（轨道左右各留 14px）
+    if (track) {
+      const trackWidth = navRect.width - 28;
+      const xPercent = ((centerX - 14) / trackWidth) * 100;
+      track.style.setProperty('--ball-x', xPercent + '%');
+    }
   },
 
   switchModule(name) {
