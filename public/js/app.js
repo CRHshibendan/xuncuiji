@@ -51,7 +51,7 @@ const App = {
   },
 
   initNavigation() {
-    const navItems = document.querySelectorAll('.nav-item');
+    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
     navItems.forEach(item => {
       item.addEventListener('click', () => {
         const module = item.dataset.module;
@@ -59,8 +59,23 @@ const App = {
         document.querySelectorAll('.nav-item').forEach(n => {
           n.classList.toggle('active', n.dataset.module === module);
         });
+        this.updateNavBall();
       });
     });
+    this.updateNavBall();
+    window.addEventListener('resize', () => this.updateNavBall());
+  },
+
+  // 把液态小球移动到当前 active 导航项中心
+  updateNavBall() {
+    const bottomNav = document.getElementById('bottomNav');
+    const active = bottomNav.querySelector('.nav-item.active');
+    const ball = bottomNav.querySelector('.nav-ball');
+    if (!active || !ball) return;
+    const navRect = bottomNav.getBoundingClientRect();
+    const itemRect = active.getBoundingClientRect();
+    const centerX = itemRect.left - navRect.left + itemRect.width / 2;
+    ball.style.left = centerX + 'px';
   },
 
   switchModule(name) {
@@ -89,6 +104,7 @@ const App = {
         document.querySelectorAll('.nav-item').forEach(n => {
           n.classList.toggle('active', n.dataset.module === 'learn');
         });
+        this.updateNavBall();
         LearnModule.selectTool(id);
         document.querySelectorAll('.learn-tool-chip').forEach(c => {
           c.classList.toggle('active', c.dataset.id === id);

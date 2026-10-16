@@ -194,8 +194,24 @@
     </div>
   </div>
 
+  <!-- SVG goo 滤镜（液态小球导航用） -->
+  <svg style="position:absolute;width:0;height:0" aria-hidden="true">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur" />
+        <feColorMatrix in="blur" mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -11" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
   <!-- 底部导航（移动端） -->
   <nav class="bottom-nav" id="bottomNav">
+    <div class="nav-indicator">
+      <div class="nav-track"></div>
+      <div class="nav-ball"></div>
+    </div>
     <button class="nav-item active" data-module="discover">
       <span class="nav-icon" data-icon="search"></span>
       <span class="nav-label">认识器具</span>
