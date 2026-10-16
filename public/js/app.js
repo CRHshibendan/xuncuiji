@@ -37,6 +37,17 @@ const App = {
     const closeBtn = document.getElementById('aiPanelClose');
     floatBtn.addEventListener('click', () => panel.classList.toggle('open'));
     closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+    // 手机端软键盘弹起时，把 AI 面板底部上推，避免输入框被挡
+    if (window.visualViewport) {
+      const adjustPanel = () => {
+        if (window.innerWidth >= 900) return;
+        const kbHeight = window.innerHeight - window.visualViewport.height;
+        panel.style.bottom = kbHeight > 0 ? kbHeight + 'px' : '0px';
+      };
+      window.visualViewport.addEventListener('resize', adjustPanel);
+      window.visualViewport.addEventListener('scroll', adjustPanel);
+    }
   },
 
   initNavigation() {
