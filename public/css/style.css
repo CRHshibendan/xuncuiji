@@ -988,21 +988,14 @@ body {
   animation: panelUp 0.3s var(--ease);
 }
 .ai-panel.open { display: flex; }
-/* 手机端：改为底部全屏弹窗，避免软键盘遮挡输入框 */
+/* 手机端：保持悬浮小窗，缩小宽度并适配键盘 */
 @media (max-width: 899px) {
   .ai-panel {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: none;
-    max-height: 85dvh;
-    height: 70dvh;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    z-index: 200;
+    width: min(340px, 92vw);
+    max-height: 65dvh;
+    bottom: 64px;
   }
-  .ai-float { z-index: 200; }
+  .ai-panel .chat-messages { min-height: 140px; max-height: 50dvh; }
 }
 @keyframes panelUp {
   from { opacity: 0; transform: translateY(16px) scale(0.95); }
@@ -1054,7 +1047,7 @@ body {
   flex-shrink: 0;
 }
 @media (max-width: 899px) {
-  .ai-panel .chat-messages { min-height: 120px; max-height: none; }
+  .ai-panel .chat-messages { min-height: 140px; max-height: 50dvh; }
 }
 
 /* 磨豆机手柄旋转 */
