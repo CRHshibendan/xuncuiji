@@ -66,17 +66,30 @@ const App = {
     window.addEventListener('resize', () => this.updateNavBall());
   },
 
-  // 把液态小球移动到当前 active 导航项中心
+  // 把白球和悬浮内容（图标+文字）移动到当前 active 导航项中心
   updateNavBall() {
     const bottomNav = document.getElementById('bottomNav');
     const active = bottomNav.querySelector('.nav-item.active');
     const ball = bottomNav.querySelector('.nav-ball');
     const track = bottomNav.querySelector('.nav-track');
+    const float = bottomNav.querySelector('.nav-float');
     if (!active || !ball) return;
     const navRect = bottomNav.getBoundingClientRect();
     const itemRect = active.getBoundingClientRect();
     const centerX = itemRect.left - navRect.left + itemRect.width / 2;
     ball.style.left = centerX + 'px';
+    if (float) {
+      float.style.left = centerX + 'px';
+      // 克隆选中项的图标和文字到悬浮层
+      const srcIcon = active.querySelector('.nav-icon');
+      const srcLabel = active.querySelector('.nav-label');
+      const floatIcon = float.querySelector('.float-icon');
+      const floatLabel = float.querySelector('.float-label');
+      if (srcIcon && floatIcon && floatIcon.innerHTML !== srcIcon.innerHTML) {
+        floatIcon.innerHTML = srcIcon.innerHTML;
+      }
+      if (srcLabel && floatLabel) floatLabel.textContent = srcLabel.textContent;
+    }
     // 轨道凹口位置：相对轨道左缘的像素值（轨道左右各留 14px）
     if (track) {
       track.style.setProperty('--ball-x', (centerX - 14) + 'px');

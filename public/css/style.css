@@ -877,6 +877,36 @@ body {
   transform: translate(-50%, -50%);
   transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+/* 悬浮内容层：图标嵌在白球中心，文字在球下方橙色轨道上，随球一起滑动 */
+.nav-float {
+  position: absolute;
+  top: calc(50% - 23px);
+  left: 16.66%;
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.nav-float .float-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-dark);
+}
+.nav-float .float-icon svg { display: block; }
+.nav-float .float-label {
+  position: absolute;
+  top: 46px; /* 球下方，落在橙色轨道上 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
 .bottom-nav .nav-item {
   position: relative;
   z-index: 1;
@@ -898,10 +928,9 @@ body {
 }
 .bottom-nav .nav-label { font-size: 10px; font-weight: 600; }
 .bottom-nav .nav-item.active { color: var(--accent-dark); }
-.bottom-nav .nav-item.active .nav-icon {
-  transform: translateY(-2px);
-  transition: transform 0.3s var(--ease);
-}
+/* 选中的图标文字交给悬浮层（跟随白球滑动），静态内容隐藏 */
+.bottom-nav .nav-item.active .nav-icon,
+.bottom-nav .nav-item.active .nav-label { opacity: 0; }
 
 /* ===== 侧边导航（桌面端） ===== */
 .side-nav {
