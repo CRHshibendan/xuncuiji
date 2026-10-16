@@ -77,11 +77,9 @@ const App = {
     const itemRect = active.getBoundingClientRect();
     const centerX = itemRect.left - navRect.left + itemRect.width / 2;
     ball.style.left = centerX + 'px';
-    // 轨道凹口位置：相对轨道宽度（轨道左右各留 14px）
+    // 轨道凹口位置：相对轨道左缘的像素值（轨道左右各留 14px）
     if (track) {
-      const trackWidth = navRect.width - 28;
-      const xPercent = ((centerX - 14) / trackWidth) * 100;
-      track.style.setProperty('--ball-x', xPercent + '%');
+      track.style.setProperty('--ball-x', (centerX - 14) + 'px');
     }
   },
 
