@@ -51,7 +51,8 @@ const App = {
   },
 
   initNavigation() {
-    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+    // 同时绑定手机底部导航和桌面侧边栏
+    const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
       item.addEventListener('click', () => {
         const module = item.dataset.module;
