@@ -865,19 +865,7 @@ body {
   mask-image: radial-gradient(circle 25px at var(--ball-x) 0, transparent 24px, #000 25px);
   transition: --ball-x 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.nav-ball {
-  position: absolute;
-  top: calc(50% - 23px); /* 球心与轨道上缘对齐，上半截浮在坑上方 */
-  left: 16.66%;
-  width: 42px;
-  height: 42px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 6px 14px rgba(61, 43, 31, 0.15), 0 2px 4px rgba(61, 43, 31, 0.08);
-  transform: translate(-50%, -50%);
-  transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* 悬浮内容层：图标嵌在白球中心，文字在球下方橙色轨道上，随球一起滑动 */
+/* 悬浮内容层：图标落在橙色轨道的半圆凹坑中心（白色背景透出当底色），文字在轨道上 */
 .nav-float {
   position: absolute;
   top: calc(50% - 23px);

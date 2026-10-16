@@ -101,18 +101,16 @@ const App = {
     }
   },
 
-  // 把白球和悬浮内容（图标+文字）移动到当前 active 导航项中心
+  // 把悬浮内容（图标+文字）和轨道凹口移动到当前 active 导航项中心
   updateNavBall() {
     const bottomNav = document.getElementById('bottomNav');
     const active = bottomNav.querySelector('.nav-item.active');
-    const ball = bottomNav.querySelector('.nav-ball');
     const track = bottomNav.querySelector('.nav-track');
     const float = bottomNav.querySelector('.nav-float');
-    if (!active || !ball) return;
+    if (!active) return;
     const navRect = bottomNav.getBoundingClientRect();
     const itemRect = active.getBoundingClientRect();
     const centerX = itemRect.left - navRect.left + itemRect.width / 2;
-    ball.style.left = centerX + 'px';
     if (float) {
       float.style.left = centerX + 'px';
       // 克隆选中项的图标和文字到悬浮层
