@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>寻萃集 · 咖啡冲煮科普</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- 顶部标题栏 -->
+  <header class="topbar">
+    <div class="logo">
+      <span class="logo-icon" id="logoIcon"></span>
+      <div>
+        <span class="logo-text">寻萃集</span>
+        <span class="logo-sub">Xun Cui Ji</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="unlockCount" class="badge">已解锁 0 / 0</span>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main id="mainContent">
+
+    <!-- 模块一：认识器具 -->
+    <section class="module active" id="module-discover">
+      <div class="module-header">
+        <h1 class="module-title">认识器具</h1>
+        <p class="module-desc">点开卡片，认识每一件咖啡器具的名字、模样与脾气。</p>
+      </div>
+      <div class="tool-grid" id="toolGrid"></div>
+    </section>
+
+    <!-- 模块二：选择并学习器具 -->
+    <section class="module" id="module-learn">
+      <div class="module-header">
+        <h1 class="module-title">选择并学习器具</h1>
+        <p class="module-desc">选择一件器具，读懂它的结构、用法与冲煮原理，读完即可解锁。</p>
+      </div>
+      <div class="learn-layout">
+        <div class="learn-side">
+          <h3 class="side-title">可选器具</h3>
+          <div class="learn-tool-list" id="learnToolList"></div>
+        </div>
+        <div class="learn-main" id="learnMain">
+          <div class="learn-placeholder">
+            <div class="placeholder-icon" id="phIcon"></div>
+            <p>从左侧选一件器具开始学习吧</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块三：交互冲煮教学 -->
+    <section class="module" id="module-brew">
+      <div class="module-header">
+        <h1 class="module-title">冲煮工坊</h1>
+        <p class="module-desc">亲手操作，一步一步煮出属于你的咖啡。</p>
+      </div>
+
+      <div class="brew-selector" id="brewSelector">
+        <div class="selector-title">选择一件已解锁的器具开始冲煮</div>
+        <div class="brew-tool-grid" id="brewToolGrid"></div>
+      </div>
+
+      <!-- 模式选择：教学 / 自由冲煮 -->
+      <div class="mode-selector hidden" id="modeSelector">
+        <div class="mode-back" id="modeBackBtn">← 返回</div>
+        <div class="mode-title" id="modeToolName">选择冲煮模式</div>
+        <div class="mode-cards">
+          <div class="mode-card" data-mode="guide">
+            <div class="mode-icon">📖</div>
+            <div class="mode-name">教学模式</div>
+            <div class="mode-desc">跟着步骤一步步学，适合新手</div>
+          </div>
+          <div class="mode-card" data-mode="free" id="freeModeCard">
+            <div class="mode-icon">🧑‍🍳</div>
+            <div class="mode-name">客人点单</div>
+            <div class="mode-desc">自由发挥，客人会给出评价</div>
+            <div class="mode-lock" id="freeModeLock">完成一次教学冲煮解锁</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="brew-stage hidden" id="brewStage">
+        <div class="brew-topbar">
+          <button class="btn-ghost" id="brewBackBtn"><span id="backIcon"></span>返回</button>
+          <div class="brew-progress">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0 / 0</span>
+          </div>
+          <div class="skin-switcher" id="skinSwitcher"></div>
+        </div>
+
+        <div class="brew-canvas" id="brewCanvas"></div>
+
+        <div class="brew-instruction" id="brewInstruction">
+          <div class="instruction-step" id="instructionStep"></div>
+          <div class="instruction-desc" id="instructionDesc"></div>
+          <div class="instruction-tip" id="instructionTip"></div>
+        </div>
+
+        <div class="ai-hint-bubble hidden" id="aiHintBubble">
+          <div class="ai-hint-header"><span id="hintIcon"></span>咖啡小助手</div>
+          <div class="ai-hint-content" id="aiHintContent"></div>
+          <button class="ai-hint-close" id="aiHintClose">知道了</button>
+        </div>
+      </div>
+
+      <div class="brew-complete hidden" id="brewComplete">
+        <div class="complete-card">
+          <div class="complete-emoji">🎉</div>
+          <h2>冲煮完成！</h2>
+          <p id="completeDesc">你解锁了新皮肤！</p>
+          <div class="skin-preview" id="skinPreview"></div>
+          <button class="btn-primary" id="completeContinue">继续探索</button>
+        </div>
+      </div>
+
+      <!-- 自由冲煮：客人点单场景 -->
+      <div class="free-brew hidden" id="freeBrew">
+        <div class="brew-topbar">
+          <button class="btn-ghost" id="freeBackBtn"><span id="freeBackIcon"></span>返回</button>
+          <div class="free-title">客人点单 · <span id="freeToolName"></span></div>
+          <div class="skin-switcher" id="freeSkinSwitcher"></div>
+        </div>
+
+        <div class="customer-bar" id="customerBar">
+          <div class="customer-avatar">🧑</div>
+          <div class="customer-bubble" id="customerBubble">来一杯好喝的咖啡！</div>
+        </div>
+
+        <div class="free-canvas" id="freeCanvas"></div>
+
+        <div class="free-controls" id="freeControls"></div>
+
+        <button class="btn-primary serve-btn" id="serveBtn">☕ 出餐给客人</button>
+      </div>
+
+      <!-- 客人评价弹窗 -->
+      <div class="customer-result hidden" id="customerResult">
+        <div class="result-card">
+          <div class="result-emoji" id="resultEmoji">😋</div>
+          <div class="result-comment" id="resultComment">好喝死了！</div>
+          <div class="result-taste" id="resultTaste"></div>
+          <div class="result-actions">
+            <button class="btn-ghost" id="resultRetryBtn">再来一杯</button>
+            <button class="btn-primary" id="resultExitBtn">返回工坊</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 悬浮 AI 小助手 -->
+  <div class="ai-float" id="aiFloat">
+    <button class="ai-float-btn" id="aiFloatBtn">
+      <span id="aiFloatIcon"></span>
+      <span class="ai-float-dot"></span>
+    </button>
+    <div class="ai-panel" id="aiPanel">
+      <div class="ai-panel-header">
+        <div class="ai-panel-title">
+          <span id="aiPanelIcon"></span>
+          <span>咖啡小助手</span>
+        </div>
+        <button class="ai-panel-close" id="aiPanelClose"></button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-msg ai">
+          <div class="msg-avatar" id="aiAvatar"></div>
+          <div class="msg-bubble">
+            你好呀！关于咖啡器具、冲煮技巧、原理的问题都可以问我～<br>
+            比如：「手冲为什么要闷蒸？」
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="quick-questions" id="quickQuestions">
+          <button class="quick-q">手冲为什么要闷蒸？</button>
+          <button class="quick-q">研磨度怎么影响味道？</button>
+          <button class="quick-q">水温多少合适？</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chatInput" placeholder="输入你的咖啡问题…" />
+          <button id="chatSend" class="btn-primary"><span id="sendIcon"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部导航（移动端） -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="nav-item active" data-module="discover">
+      <span class="nav-icon" data-icon="search"></span>
+      <span class="nav-label">认识器具</span>
+    </button>
+    <button class="nav-item" data-module="learn">
+      <span class="nav-icon" data-icon="book"></span>
+      <span class="nav-label">学习</span>
+    </button>
+    <button class="nav-item" data-module="brew">
+      <span class="nav-icon" data-icon="coffee"></span>
+      <span class="nav-label">冲煮</span>
+    </button>
+  </nav>
+
+  <!-- 左侧导航（桌面端） -->
+  <nav class="side-nav" id="sideNav">
+    <div class="nav-logo">
+      <span class="logo-icon" id="logoIconSide"></span>
+      <div>
+        <div style="font-weight:800;font-size:18px;">寻萃集</div>
+        <div style="font-size:10px;color:var(--text-faint);letter-spacing:2px;">XUN CUI JI</div>
+      </div>
+    </div>
+    <button class="nav-item active" data-module="discover">
+      <span class="nav-icon" data-icon="search"></span>
+      <span>认识器具</span>
+    </button>
+    <button class="nav-item" data-module="learn">
+      <span class="nav-icon" data-icon="book"></span>
+      <span>学习器具</span>
+    </button>
+    <button class="nav-item" data-module="brew">
+      <span class="nav-icon" data-icon="coffee"></span>
+      <span>冲煮工坊</span>
+    </button>
+  </nav>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/svg-tools.js"></script>
+<script src="js/data.js"></script>
+<script src="js/learn.js"></script>
+<script src="js/brew.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
