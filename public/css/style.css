@@ -976,6 +976,8 @@ body {
   background: transparent;
   color: #fff;
 }
+/* 选中项内容交给悬浮层（跟随白球滑动），静态内容隐藏 */
+.side-nav .nav-item.active > * { opacity: 0; }
 .side-nav .nav-icon {
   width: 22px; height: 22px;
   display: flex; align-items: center; justify-content: center;
@@ -1018,6 +1020,36 @@ body {
   box-shadow: 0 6px 14px rgba(61, 43, 31, 0.15), 0 2px 4px rgba(61, 43, 31, 0.08);
   transform: translate(-50%, -50%);
   transition: top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 桌面端悬浮内容层：图标嵌在白球中心，文字在球右侧橙色轨道上 */
+.side-float {
+  position: absolute;
+  left: 0;
+  top: var(--side-ball-y, 140px);
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.side-float .float-icon {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-dark);
+}
+.side-float .float-icon svg { display: block; }
+.side-float .float-label {
+  position: absolute;
+  left: 30px; /* 球右侧，落在橙色轨道上 */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
 }
 
 /* ===== Toast ===== */

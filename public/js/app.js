@@ -76,6 +76,7 @@ const App = {
     const items = sideNav.querySelectorAll('.nav-item');
     const active = sideNav.querySelector('.nav-item.active');
     const indicator = sideNav.querySelector('.side-indicator');
+    const float = sideNav.querySelector('.side-float');
     if (!items.length || !active || !indicator) return;
     const navRect = sideNav.getBoundingClientRect();
     const first = items[0].getBoundingClientRect();
@@ -87,6 +88,17 @@ const App = {
     indicator.style.setProperty('--track-top', trackTop + 'px');
     indicator.style.setProperty('--track-h', trackH + 'px');
     indicator.style.setProperty('--side-ball-y', ballY + 'px');
+    if (float) {
+      float.style.top = ballY + 'px';
+      const srcIcon = active.querySelector('.nav-icon');
+      const srcLabel = active.querySelector('span:not(.nav-icon)');
+      const fIcon = float.querySelector('.float-icon');
+      const fLabel = float.querySelector('.float-label');
+      if (srcIcon && fIcon && fIcon.innerHTML !== srcIcon.innerHTML) {
+        fIcon.innerHTML = srcIcon.innerHTML;
+      }
+      if (srcLabel && fLabel) fLabel.textContent = srcLabel.textContent;
+    }
   },
 
   // 把白球和悬浮内容（图标+文字）移动到当前 active 导航项中心
