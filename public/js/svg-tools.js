@@ -250,7 +250,8 @@ const SVGTools = {
   },
 
   // 云朵咖啡分享壶（玻璃，带导流嘴、弧形把手、刻度，咖啡水位动态）
-  server(level = 0) {
+  server(level = 0, opts = {}) {
+    const showLid = opts.showLid !== false;
     const fillH = 95 * Math.min(level, 100) / 100;
     const coffeeTop = 485 - fillH;
     return `<svg viewBox="0 0 640 640" class="svg-tool">
@@ -288,12 +289,12 @@ const SVGTools = {
           <path d="M349 337H366"/>
           <path d="M352 366H379"/>
         </g>
-        <!-- 壶盖 -->
+        ${showLid ? `<!-- 壶盖 -->
         <g id="lid">
           <path d="M239 170C252 155 366 155 379 170L374 184C354 197 264 197 244 184Z" fill="#7D8C79"/>
           <ellipse cx="309" cy="168" rx="70" ry="15" fill="#95A28D"/>
           <path d="M261 164C280 157 338 157 357 164" stroke="#BECAB3" stroke-width="3"/>
-        </g>
+        </g>` : ''}
       </g>
     </svg>`;
   },
