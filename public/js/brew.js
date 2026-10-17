@@ -188,10 +188,10 @@ const BrewModule = {
         // Melitta：滤杯 + 分享壶
         const server = this.addSVG(SVGTools.server(s.coffeeLevel || 0, { showLid: false }), 'tool-server', 0, 285, true);
         canvas.appendChild(server);
-        const dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 255, true);
+        const dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 245, true);
         canvas.appendChild(dripper);
         if (s.groundsLevel) {
-          const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 255, true);
+          const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 245, true);
           canvas.appendChild(grounds);
         }
       }
@@ -939,10 +939,10 @@ const BrewModule = {
       // Melitta：滤杯 + 分享壶 + 粉层
       const server = this.addSVG(SVGTools.server(0, { showLid: false }), 'tool-server', 0, 250, true);
       canvas.appendChild(server);
-      dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 220, true);
+      dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 210, true);
       canvas.appendChild(dripper);
       if (s.dosed) {
-        const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 220, true);
+        const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 210, true);
         canvas.appendChild(grounds);
       }
     }
