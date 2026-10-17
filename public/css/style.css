@@ -1165,7 +1165,7 @@ body {
   to { transform: rotate(360deg); }
 }
 .grinder-handle-svg {
-  transform-origin: 100px 14px;
+  transform-origin: 320px 196px;
   cursor: pointer;
 }
 

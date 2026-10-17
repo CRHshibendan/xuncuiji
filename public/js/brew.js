@@ -190,9 +190,6 @@ const BrewModule = {
         canvas.appendChild(server);
         const dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 175, true);
         canvas.appendChild(dripper);
-        const filter = this.addSVG(SVGTools.filter(), 'tool-dripper', 0, 175, true);
-        filter.style.opacity = '0.9';
-        canvas.appendChild(filter);
         if (s.groundsLevel) {
           const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 175, true);
           canvas.appendChild(grounds);
@@ -722,7 +719,7 @@ const BrewModule = {
       const kRect = kettle.getBoundingClientRect();
       const cRect = canvas.getBoundingClientRect();
       const w = kRect.width, h = kRect.height;
-      const sx = 16 / 200 * w, sy = 44 / 200 * h;
+      const sx = 83 / 640 * w, sy = 145 / 640 * h;
       const cx = w / 2, cy = h / 2;
       const rad = tilt * Math.PI / 180;
       const rx = sx - cx, ry = sy - cy;
@@ -939,14 +936,11 @@ const BrewModule = {
       dripper.style.height = '130px';
       canvas.appendChild(dripper);
     } else {
-      // Melitta：滤杯 + 分享壶 + 滤纸 + 粉层
+      // Melitta：滤杯 + 分享壶 + 粉层
       const server = this.addSVG(SVGTools.server(0), 'tool-server', 0, 250, true);
       canvas.appendChild(server);
       dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 120, true);
       canvas.appendChild(dripper);
-      const filter = this.addSVG(SVGTools.filter(), 'tool-dripper', 0, 120, true);
-      filter.style.opacity = '0.9';
-      canvas.appendChild(filter);
       if (s.dosed) {
         const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 120, true);
         canvas.appendChild(grounds);
@@ -1191,8 +1185,8 @@ const BrewModule = {
       const w = kRect.width;
       const h = kRect.height;
       // 壶嘴在 SVG 中的相对位置
-      const spoutRelX = 16 / 200 * w;
-      const spoutRelY = 44 / 200 * h;
+      const spoutRelX = 83 / 640 * w;
+      const spoutRelY = 145 / 640 * h;
       // 旋转中心（壶中心）
       const cx = kRect.width / 2;
       const cy = kRect.height / 2;

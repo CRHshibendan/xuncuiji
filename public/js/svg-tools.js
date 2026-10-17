@@ -9,53 +9,32 @@ const SVGTools = {
     return this.melittaDripper(color);
   },
 
-  // Melitta 梯形陶瓷滤杯（带把手、肋骨、承托底座）
   melittaDripper(color) {
-    const body = this.lighten(color, 55);
-    const bodyDark = this.lighten(color, 40);
-    const rim = this.lighten(color, 62);
-    const rimInner = this.lighten(color, 48);
-    const stroke = this.darken(color, 30);
-    const rib = this.darken(color, 18);
-    return `<svg viewBox="0 0 640 640" class="svg-tool">
-      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
-        <!-- 把手 -->
-        <g id="handle">
-          <path d="M464 237C503 219 550 235 553 275C556 316 517 355 463 362L451 331C492 326 520 302 518 279C517 257 495 255 475 269Z" fill="${body}"/>
-        </g>
-        <!-- 底座 -->
-        <g id="base">
-          <path d="M195 445V460C195 480 445 480 445 460V445Z" fill="${bodyDark}"/>
-          <ellipse cx="320" cy="445" rx="125" ry="22" fill="${rim}"/>
-          <path d="M276 411V441C289 452 351 452 364 441V411" fill="${body}"/>
-        </g>
-        <!-- 杯身 -->
-        <g id="body">
-          <path d="M130 185L241 411C250 431 390 431 399 411L510 185Z" fill="${body}"/>
-          <path d="M147 218L250 410C255 422 385 422 390 410L493 218" stroke="${rib}" stroke-width="3"/>
-          <g stroke="${rib}" stroke-width="3">
-            <path d="M180 245L264 403"/>
-            <path d="M232 258L287 409"/>
-            <path d="M290 265L309 412"/>
-            <path d="M350 265L331 412"/>
-            <path d="M408 258L353 409"/>
-            <path d="M460 245L376 403"/>
-          </g>
-        </g>
-        <!-- 杯口 -->
-        <g id="rim">
-          <ellipse cx="320" cy="185" rx="190" ry="65" fill="${rim}"/>
-          <ellipse cx="320" cy="185" rx="172" ry="49" fill="${rimInner}" stroke="${stroke}" stroke-width="3"/>
-          <path d="M179 204L268 220M226 223L291 230M290 233L309 236M350 233L331 236M414 223L349 230M461 204L372 220" stroke="${rib}" stroke-width="2.5"/>
-          <path d="M197 160C260 135 378 135 442 159" stroke="#FFFFFF" stroke-width="6"/>
-        </g>
-        <!-- 细节 -->
-        <g id="details" stroke="${stroke}" stroke-width="2.5">
-          <path d="M282 454C305 457 335 457 358 454"/>
-          <path d="M260 394C270 402 370 402 380 394"/>
-        </g>
-      </g>
-    </svg>`;
+    return `<svg viewBox="0 0 640 640" class="svg-tool" fill="none">
+  <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <g id="handle">
+      <path d="M464 237C503 219 550 235 553 275C556 316 517 355 463 362L451 331C492 326 520 302 518 279C517 257 495 255 475 269Z" fill="#EEEAE1"/>
+    </g>
+    <g id="base">
+      <path d="M195 445V460C195 480 445 480 445 460V445Z" fill="#E3DED3"/>
+      <ellipse cx="320" cy="445" rx="125" ry="22" fill="#F8F5EF"/>
+      <path d="M276 411V441C289 452 351 452 364 441V411" fill="#F5F1E8"/>
+    </g>
+    <g id="body">
+      <path d="M130 185L241 411C250 431 390 431 399 411L510 185Z" fill="#F8F5EF"/>
+    </g>
+    <g id="rim">
+      <ellipse cx="320" cy="185" rx="190" ry="65" fill="#FFFCF7"/>
+      <ellipse cx="320" cy="185" rx="172" ry="49" fill="#E9E4DA" stroke="#A99C8C" stroke-width="3"/>
+      <path d="M179 204L268 220M226 223L291 230M290 233L309 236M350 233L331 236M414 223L349 230M461 204L372 220" stroke="#B9AD9D" stroke-width="2.5"/>
+      <path d="M197 160C260 135 378 135 442 159" stroke="#FFFFFF" stroke-width="6"/>
+    </g>
+    <g id="details" stroke="#A99C8C" stroke-width="2.5">
+      <path d="M282 454C305 457 335 457 358 454"/>
+      <path d="M260 394C270 402 370 402 380 394"/>
+    </g>
+  </g>
+</svg>`;
   },
 
   // Chemex 完整沙漏壶（玻璃漏斗+木领+皮绳+下壶），可含咖啡液、滤纸、粉层
@@ -77,7 +56,7 @@ const SVGTools = {
         </linearGradient>
         <clipPath id="cheBodyClip"><path d="${bodyPath}"/></clipPath>
       </defs>
-      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
         <g id="glass-body">
           <path d="${bodyPath}" fill="${glass}" fill-opacity="0.36"/>
           <path d="M188 164C214 212 246 251 280 286M452 164C426 212 394 251 360 286" stroke="#B6C7C2" stroke-width="3"/>
@@ -164,86 +143,62 @@ const SVGTools = {
   },
 
   // 细嘴手冲壶（鹅颈壶）
+  // 鹅颈手冲壶（含温度显示、沸腾蒸汽）
   kettle(temp = 20, boiling = false) {
     const tempColor = temp >= 90 ? '#FF5252' : temp >= 70 ? '#FFA726' : '#66BB6A';
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
       <defs>
         <linearGradient id="ketBody" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#90A4AE"/>
-          <stop offset="30%" stop-color="#607D8B"/>
-          <stop offset="70%" stop-color="#455A64"/>
-          <stop offset="100%" stop-color="#37474F"/>
-        </linearGradient>
-        <linearGradient id="ketShine" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          <stop offset="50%" stop-color="#607D8B"/>
+          <stop offset="100%" stop-color="#455A64"/>
         </linearGradient>
       </defs>
-      <!-- 壶身（圆润矮胖） -->
-      <path d="M58 72 Q58 62 70 62 L132 62 Q144 62 144 72 L148 158 Q148 170 136 170 L66 170 Q54 170 54 158 Z" fill="url(#ketBody)" stroke="#263238" stroke-width="2"/>
-      <!-- 高光带 -->
-      <path d="M62 66 L138 66 L140 88 L60 88 Z" fill="url(#ketShine)"/>
-      <ellipse cx="100" cy="100" rx="30" ry="6" fill="rgba(255,255,255,0.08)"/>
-      <!-- 壶盖 -->
-      <ellipse cx="101" cy="60" rx="36" ry="7" fill="#546E7A" stroke="#263238" stroke-width="1.5"/>
-      <ellipse cx="101" cy="58" rx="36" ry="4" fill="#78909C" opacity="0.6"/>
-      <circle cx="101" cy="52" r="6" fill="#37474F" stroke="#263238" stroke-width="1.5"/>
-      <circle cx="101" cy="51" r="3" fill="#546E7A"/>
-      <!-- 鹅颈细嘴（向左上方弯曲） -->
-      <path d="M58 75 Q30 70 18 52 Q14 45 20 42 L26 46 Q24 50 28 56 Q38 70 58 78 Z" fill="url(#ketBody)" stroke="#263238" stroke-width="1.8"/>
-      <path d="M20 44 L28 50" stroke="#78909C" stroke-width="1" opacity="0.6"/>
-      <!-- 把手 -->
-      <path d="M144 72 Q172 78 172 108 Q172 138 144 144" fill="none" stroke="#37474F" stroke-width="7" stroke-linecap="round"/>
-      <path d="M144 72 Q172 78 172 108 Q172 138 144 144" fill="none" stroke="#546E7A" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-      <!-- 温度显示屏 -->
-      <rect x="68" y="108" width="64" height="30" rx="5" fill="#0D3110" stroke="#000" stroke-width="1.5"/>
-      <rect x="70" y="110" width="60" height="26" rx="3" fill="#1B5E20"/>
-      <text x="100" y="129" text-anchor="middle" font-family="'Courier New', monospace" font-size="15" font-weight="bold" fill="${tempColor}">${temp}°C</text>
-      ${boiling ? `
-      <g>
-        <ellipse cx="78" cy="42" rx="3" ry="9" fill="#fff" opacity="0.5">
-          <animate attributeName="cy" values="46;22;46" dur="1.1s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.5;0;0.5" dur="1.1s" repeatCount="indefinite"/>
-        </ellipse>
-        <ellipse cx="100" cy="40" rx="2.5" ry="7" fill="#fff" opacity="0.4">
-          <animate attributeName="cy" values="42;20;42" dur="0.9s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.4;0;0.4" dur="0.9s" repeatCount="indefinite"/>
-        </ellipse>
-        <ellipse cx="120" cy="43" rx="3" ry="8" fill="#fff" opacity="0.45">
-          <animate attributeName="cy" values="47;24;47" dur="1.3s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.45;0;0.45" dur="1.3s" repeatCount="indefinite"/>
-        </ellipse>
-      </g>` : ''}
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <!-- 把手 -->
+        <g id="handle"><path d="M420 249C496 216 535 244 533 307C531 367 489 402 431 392L428 361C469 369 501 342 502 304C504 267 482 253 433 280Z" fill="#6F7C78"/></g>
+        <!-- 鹅颈壶嘴 -->
+        <g id="spout"><path d="M211 388C149 383 134 353 128 309C119 250 121 207 93 178L68 155L83 145C132 175 145 220 151 279C156 330 167 343 221 344Z" fill="#DCE4DB"/><path d="M79 151L101 174" stroke="#A8B7AA" stroke-width="3"/><path d="M138 295C144 351 159 361 202 368" stroke="#FFF" stroke-width="5"/></g>
+        <!-- 壶身 -->
+        <g id="body"><path d="M240 244C210 284 193 364 187 436C185 465 218 486 322 486C426 486 459 465 457 436C451 364 434 284 404 244Z" fill="#DCE4DB"/><ellipse cx="322" cy="244" rx="82" ry="23" fill="#ACBBAE"/><path d="M223 320C211 364 207 405 207 435" stroke="#FFF" stroke-width="10"/><path d="M214 464C266 479 380 479 430 464" stroke="#A6B3A5" stroke-width="3"/></g>
+        <!-- 壶盖 -->
+        <g id="lid"><path d="M239 238C245 207 399 207 405 238C374 251 270 251 239 238Z" fill="#EEF1E8"/><path d="M299 214V196C299 181 345 181 345 196V214Z" fill="#C69A62"/><path d="M306 192C315 188 332 188 338 192" stroke="#E5C69D" stroke-width="3"/></g>
+        <!-- 温度显示屏 -->
+        <rect x="258" y="300" width="128" height="44" rx="8" fill="#0D3110" stroke="#000" stroke-width="2.5"/>
+        <rect x="262" y="304" width="120" height="36" rx="5" fill="#1B5E20"/>
+        <text x="322" y="330" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="bold" fill="${tempColor}">${temp}°C</text>
+        ${boiling ? `
+        <g>
+          <ellipse cx="160" cy="130" rx="6" ry="16" fill="#fff" opacity="0.5">
+            <animate attributeName="cy" values="140;90;140" dur="1.1s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5;0;0.5" dur="1.1s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="200" cy="125" rx="5" ry="14" fill="#fff" opacity="0.4">
+            <animate attributeName="cy" values="135;85;135" dur="0.9s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.4;0;0.4" dur="0.9s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="240" cy="132" rx="6" ry="15" fill="#fff" opacity="0.45">
+            <animate attributeName="cy" values="142;92;142" dur="1.3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.45;0;0.45" dur="1.3s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>` : ''}
+      </g>
     </svg>`;
   },
 
-  // 电子秤
+  // 电子秤（显示屏实时重量）
   scale(weight = 0) {
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
-      <defs>
-        <linearGradient id="scBody" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#6D4C41"/>
-          <stop offset="100%" stop-color="#3E2723"/>
-        </linearGradient>
-        <linearGradient id="scTop" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#A1887F"/>
-          <stop offset="100%" stop-color="#8D6E63"/>
-        </linearGradient>
-      </defs>
-      <!-- 秤盘 -->
-      <rect x="35" y="112" width="130" height="10" rx="3" fill="url(#scTop)" stroke="#5D4037" stroke-width="1"/>
-      <rect x="40" y="112" width="120" height="3" rx="1.5" fill="#BCAAA4" opacity="0.6"/>
-      <!-- 机身 -->
-      <path d="M32 122 L168 122 L162 170 Q162 176 156 176 L44 176 Q38 176 38 170 Z" fill="url(#scBody)" stroke="#2E1A12" stroke-width="2"/>
-      <!-- 显示屏 -->
-      <rect x="52" y="136" width="96" height="26" rx="4" fill="#0D3110" stroke="#000" stroke-width="1.5"/>
-      <rect x="54" y="138" width="92" height="22" rx="3" fill="#1B5E20"/>
-      <text x="100" y="155" text-anchor="middle" font-family="'Courier New', monospace" font-size="17" font-weight="bold" fill="#69F0AE">${weight.toFixed(1)}g</text>
-      <!-- 按钮 -->
-      <circle cx="58" cy="167" r="3.5" fill="#4E342E" stroke="#2E1A12" stroke-width="0.8"/>
-      <circle cx="142" cy="167" r="3.5" fill="#4E342E" stroke="#2E1A12" stroke-width="0.8"/>
-      <!-- 高光 -->
-      <rect x="42" y="124" width="116" height="2" rx="1" fill="#8D6E63" opacity="0.5"/>
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <g id="feet" fill="#6F7C78"><path d="M149 442V463H199V446M441 446V463H491V442"/></g>
+        <g id="body"><path d="M114 382H526V425C526 443 512 452 494 452H146C128 452 114 443 114 425Z" fill="#AAB7AA"/><path d="M149 177H491L526 382C530 402 519 414 500 414H140C121 414 110 402 114 382Z" fill="#DDE5DA"/><path d="M134 423H506" stroke="#849582" stroke-width="3"/></g>
+        <g id="weighing-platform"><path d="M166 193H474L491 301C492 313 484 320 471 320H169C156 320 148 313 149 301Z" fill="#7B8B7D"/><path d="M176 207H464L477 300H163Z" fill="#91A18F" stroke="#AEBCA8" stroke-width="2.5"/><path d="M184 217H454" stroke="#C3CFB9" stroke-width="3"/></g>
+        <g id="display"><rect x="178" y="342" width="284" height="49" rx="8" fill="#56685B"/>
+          <text x="320" y="376" text-anchor="middle" font-family="'Courier New', monospace" font-size="30" font-weight="bold" fill="#DDEACD">${weight.toFixed(1)}g</text>
+          <path d="M320 351V380" stroke="#94A58A" stroke-width="2"/>
+        </g>
+        <g id="controls"><circle cx="145" cy="367" r="13" fill="#F7F6EC"/><path d="M145 357V365M139 361A9 9 0 1 0 151 361" stroke="#697A66" stroke-width="2"/><circle cx="495" cy="367" r="13" fill="#C69A62"/><path d="M489 362H501M495 362V373" stroke="#785A3E" stroke-width="2"/></g>
+      </g>
     </svg>`;
   },
 
@@ -274,204 +229,135 @@ const SVGTools = {
     </svg>`;
   },
 
-  // 磨豆机（手摇）
+  // 手摇磨豆机（摇柄可旋转，接粉杯内粉量随进度增长）
   grinder(progress = 0) {
-    const outH = 8 + progress * 22;
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
-      <defs>
-        <linearGradient id="grBody" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#78909C"/>
-          <stop offset="50%" stop-color="#546E7A"/>
-          <stop offset="100%" stop-color="#37474F"/>
-        </linearGradient>
-        <linearGradient id="grWood" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#A1887F"/>
-          <stop offset="100%" stop-color="#6D4C41"/>
-        </linearGradient>
-      </defs>
-      <!-- 机身（金属） -->
-      <rect x="62" y="58" width="76" height="88" rx="10" fill="url(#grBody)" stroke="#263238" stroke-width="2"/>
-      <rect x="62" y="58" width="76" height="18" rx="9" fill="#90A4AE" opacity="0.7"/>
-      <!-- 品牌标 -->
-      <rect x="82" y="92" width="36" height="18" rx="3" fill="#263238" opacity="0.4"/>
-      <text x="100" y="105" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#B0BEC5">GRIND</text>
-      <!-- 顶部豆仓（木） -->
-      <path d="M72 58 L128 58 L120 36 L80 36 Z" fill="url(#grWood)" stroke="#3E2723" stroke-width="1.5"/>
-      <ellipse cx="100" cy="36" rx="20" ry="5" fill="#3E2723"/>
-      <ellipse cx="100" cy="36" rx="16" ry="3.5" fill="#1A0E08"/>
-      <!-- 摇柄 -->
-      <g class="grinder-handle-svg">
-        <rect x="96" y="12" width="8" height="26" rx="3" fill="#37474F" stroke="#263238" stroke-width="1"/>
-        <circle cx="100" cy="11" r="9" fill="url(#grWood)" stroke="#3E2723" stroke-width="1.5"/>
-        <circle cx="100" cy="11" r="4" fill="#3E2723" opacity="0.5"/>
+    const fillH = Math.min(8 + progress * 12, 42);
+    const fillTop = 493 - fillH;
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <g id="body"><path d="M239 254H401V434C401 454 239 454 239 434Z" fill="#D9E2D5"/><ellipse cx="320" cy="254" rx="81" ry="22" fill="#ADBDA8"/><path d="M258 287V412" stroke="#FFF" stroke-width="8"/><path d="M385 286V424" stroke="#A1B298" stroke-width="3"/></g>
+        <g id="grip"><path d="M236 318C258 327 382 327 404 318V379C382 390 258 390 236 379Z" fill="#7D8C79"/><path d="M249 336V365M264 339V369M279 341V372M294 343V374M309 344V375M324 344V375M339 343V374M354 342V372M369 340V369M384 337V365" stroke="#A5B39A" stroke-width="2"/></g>
+        <!-- 接粉杯（含咖啡粉） -->
+        <g id="grounds-cup"><path d="M239 435C258 446 382 446 401 435V493C401 521 239 521 239 493Z" fill="#C69A62"/><path d="M251 450C282 457 358 457 389 450M255 496C281 503 358 503 385 496" stroke="#A57C4D" stroke-width="2.5"/><path d="M258 464V483" stroke="#E8CBA4" stroke-width="5"/>
+          ${progress > 0 ? `<clipPath id="grCupClip"><path d="M251 450C282 457 358 457 389 450L396 490C370 500 270 500 244 490Z"/></clipPath>
+          <g clip-path="url(#grCupClip)"><rect x="244" y="${fillTop}" width="152" height="${fillH + 8}" fill="#5D4037"/><ellipse cx="320" cy="${fillTop}" rx="70" ry="8" fill="#6D4C41"/></g>` : ''}
+        </g>
+        <g id="lid"><path d="M238 247C246 220 394 220 402 247V256C371 269 269 269 238 256Z" fill="#EEF1E6"/><path d="M311 224V194H329V224" fill="#93A58B"/></g>
+        <!-- 摇柄（可旋转） -->
+        <g id="crank" class="grinder-handle-svg"><path d="M311 196V171C311 160 319 155 329 155H462V171H331V196Z" fill="#BDCBB5"/><path d="M452 162V137" stroke="#6F7C78" stroke-width="9"/><path d="M430 136C420 129 421 108 430 101C439 94 473 94 482 101C491 108 492 129 482 136C473 143 439 143 430 136Z" fill="#C69A62"/><path d="M434 105C445 101 467 101 478 105" stroke="#E5C69D" stroke-width="3"/></g>
       </g>
-      <!-- 出粉口 -->
-      <rect x="80" y="${150 - outH}" width="40" height="${outH}" rx="5" fill="#5D4037"/>
-      <ellipse cx="100" cy="${150 - outH}" rx="20" ry="4" fill="#6D4C41" opacity="0.6"/>
     </svg>`;
   },
 
-  // 分享壶（玻璃）
+  // 云朵咖啡分享壶（玻璃，带导流嘴、弧形把手、刻度，咖啡水位动态）
   server(level = 0) {
-    const h = 115 * level / 100;
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
+    const fillH = 95 * Math.min(level, 100) / 100;
+    const coffeeTop = 485 - fillH;
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
       <defs>
-        <linearGradient id="svCoffee" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#8D6E63"/>
-          <stop offset="100%" stop-color="#3E2723"/>
-        </linearGradient>
-        <linearGradient id="svGlass" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
-          <stop offset="50%" stop-color="rgba(255,255,255,0.3)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0.08)"/>
-        </linearGradient>
+        <clipPath id="csGlassClip"><path d="M229 211C232 255 215 292 189 326C164 358 145 390 151 428C159 477 204 500 310 500C416 500 461 477 469 428C475 390 456 358 431 326C405 292 388 255 391 211Z"/></clipPath>
       </defs>
-      <!-- 壶身（圆润） -->
-      <path d="M62 52 L138 52 L142 70 L138 168 Q138 178 128 178 L72 178 Q62 178 62 168 Z" fill="rgba(255,255,255,0.12)" stroke="#A1887F" stroke-width="2.5"/>
-      <path d="M62 52 L138 52 L142 70 L138 168 Q138 178 128 178 L72 178 Q62 178 62 168 Z" fill="url(#svGlass)"/>
-      <!-- 咖啡液 -->
-      <path d="M66 ${170 - h} L134 ${170 - h} L133 168 Q133 174 128 174 L72 174 Q67 174 67 168 Z" fill="url(#svCoffee)"/>
-      <ellipse cx="100" cy="${170 - h}" rx="34" ry="5" fill="#A1887F" opacity="0.6"/>
-      <!-- 壶嘴 -->
-      <path d="M138 58 L160 50 L158 60 L140 66 Z" fill="rgba(255,255,255,0.18)" stroke="#A1887F" stroke-width="2"/>
-      <!-- 把手 -->
-      <path d="M62 62 Q34 68 34 100 Q34 132 62 138" fill="none" stroke="#A1887F" stroke-width="6" stroke-linecap="round"/>
-      <path d="M62 62 Q34 68 34 100 Q34 132 62 138" fill="none" stroke="#8D6E63" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-      <!-- 刻度 -->
-      <g stroke="#A1887F" stroke-width="1" opacity="0.5">
-        <line x1="68" y1="95" x2="74" y2="95"/>
-        <line x1="68" y1="120" x2="74" y2="120"/>
-        <line x1="68" y1="145" x2="74" y2="145"/>
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <!-- 把手 -->
+        <g id="handle">
+          <path d="M403 242C465 215 517 231 522 280C528 333 492 382 427 392L418 363C464 354 494 323 490 286C487 256 456 252 414 274Z" fill="#E4ECE7" fill-opacity=".65"/>
+          <path d="M438 252C479 242 506 257 506 286" stroke="#FFF" stroke-width="5"/>
+        </g>
+        <!-- 玻璃壶身 -->
+        <g id="glass-body">
+          <path d="M229 211C232 255 215 292 189 326C164 358 145 390 151 428C159 477 204 500 310 500C416 500 461 477 469 428C475 390 456 358 431 326C405 292 388 255 391 211Z" fill="#EAF1ED" fill-opacity=".4"/>
+          <path d="M244 240C241 279 224 308 203 338" stroke="#BDCEC3" stroke-width="3"/>
+          <path d="M201 355C180 383 175 405 180 427C183 442 193 454 207 461" stroke="#FFF" stroke-width="10"/>
+          <path d="M411 343C430 368 443 392 444 412" stroke="#B6C8BC" stroke-width="3"/>
+          <path d="M191 475C248 493 373 493 431 475" stroke="#ADBEAF" stroke-width="3"/>
+        </g>
+        <!-- 咖啡液（裁剪在壶身内） -->
+        ${fillH > 0 ? `<g clip-path="url(#csGlassClip)">
+          <rect x="140" y="${coffeeTop}" width="340" height="${fillH + 20}" fill="#A8815C" fill-opacity=".7"/>
+          <ellipse cx="310" cy="${coffeeTop}" rx="145" ry="12" fill="#C6AD90" opacity="0.5"/>
+        </g>` : ''}
+        <!-- 杯口与导流嘴 -->
+        <g id="rim-and-spout">
+          <path d="M229 211C223 190 245 175 307 175C351 175 377 183 391 195L415 176L407 207C405 229 246 240 229 211Z" fill="#F8FBF8" fill-opacity=".8"/>
+          <path d="M244 203C264 183 347 182 376 202C353 221 270 224 244 203Z" fill="#E2ECE5" fill-opacity=".65" stroke="#ADBEAF" stroke-width="2.5"/>
+          <path d="M377 217L400 195" stroke="#ADBEAF" stroke-width="2.5"/>
+        </g>
+        <!-- 刻度线 -->
+        <g id="measurement-marks" stroke="#93A993" stroke-width="3">
+          <path d="M346 308H373"/>
+          <path d="M349 337H366"/>
+          <path d="M352 366H379"/>
+        </g>
+        <!-- 壶盖 -->
+        <g id="lid">
+          <path d="M239 170C252 155 366 155 379 170L374 184C354 197 264 197 244 184Z" fill="#7D8C79"/>
+          <ellipse cx="309" cy="168" rx="70" ry="15" fill="#95A28D"/>
+          <path d="M261 164C280 157 338 157 357 164" stroke="#BECAB3" stroke-width="3"/>
+        </g>
       </g>
-      <!-- 玻璃高光 -->
-      <path d="M68 58 Q60 110 72 170" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
     </svg>`;
   },
 
-  // 法压壶
+  // 法压壶（咖啡液水位、压杆位置动态）
   frenchPress(waterLevel = 0, pressPos = 0) {
-    const h = 105 * waterLevel / 100;
-    const pressY = 38 + pressPos;
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
+    const h = 300 * Math.min(waterLevel, 100) / 100;
+    const coffeeTop = 485 - h;
+    const discY = 200 + pressPos * 4.5;
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
       <defs>
         <linearGradient id="fpCoffee" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#A1887F"/>
           <stop offset="100%" stop-color="#4E342E"/>
         </linearGradient>
-        <linearGradient id="fpMetal" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#B0BEC5"/>
-          <stop offset="50%" stop-color="#78909C"/>
-          <stop offset="100%" stop-color="#546E7A"/>
-        </linearGradient>
-        <linearGradient id="fpGlass" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.05)"/>
-          <stop offset="50%" stop-color="rgba(255,255,255,0.25)"/>
-          <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
-        </linearGradient>
+        <clipPath id="fpGlassClip"><path d="M192 182H424V491C424 526 192 526 192 491Z"/></clipPath>
       </defs>
-      <!-- 底座 -->
-      <ellipse cx="100" cy="178" rx="48" ry="7" fill="#546E7A"/>
-      <rect x="52" y="172" width="96" height="8" rx="4" fill="url(#fpMetal)" stroke="#37474F" stroke-width="1.5"/>
-      <!-- 金属框架竖条 -->
-      <rect x="54" y="48" width="6" height="124" fill="url(#fpMetal)" stroke="#37474F" stroke-width="1"/>
-      <rect x="140" y="48" width="6" height="124" fill="url(#fpMetal)" stroke="#37474F" stroke-width="1"/>
-      <!-- 玻璃壶身 -->
-      <rect x="60" y="48" width="80" height="124" rx="4" fill="url(#fpGlass)" stroke="#90A4AE" stroke-width="2"/>
-      <!-- 咖啡液 -->
-      <rect x="63" y="${170 - h}" width="74" height="${Math.max(0, h - 3)}" rx="2" fill="url(#fpCoffee)"/>
-      <ellipse cx="100" cy="${170 - h}" rx="37" ry="3.5" fill="#A1887F" opacity="0.5"/>
-      <!-- 压杆 -->
-      <rect x="96" y="${pressY}" width="8" height="${168 - pressY}" rx="3" fill="url(#fpMetal)" stroke="#37474F" stroke-width="1"/>
-      <!-- 压盘（带滤网） -->
-      <circle cx="100" cy="${162 - pressPos}" r="34" fill="none" stroke="#546E7A" stroke-width="2"/>
-      <circle cx="100" cy="${162 - pressPos}" r="30" fill="#78909C" opacity="0.6" stroke="#455A64" stroke-width="1"/>
-      <g stroke="#455A64" stroke-width="0.8" opacity="0.6">
-        <line x1="74" y1="${162 - pressPos}" x2="126" y2="${162 - pressPos}"/>
-        <line x1="78" y1="${156 - pressPos}" x2="122" y2="${156 - pressPos}"/>
-        <line x1="78" y1="${168 - pressPos}" x2="122" y2="${168 - pressPos}"/>
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <g id="handle"><path d="M421 210C491 203 512 239 512 296C512 357 483 394 422 391V361C463 360 481 334 481 296C481 258 469 239 422 240Z" fill="#6F7C78"/></g>
+        <!-- 玻璃壶身 -->
+        <g id="glass"><path d="M192 182H424V491C424 526 192 526 192 491Z" fill="#ECF1EE" fill-opacity=".45"/><ellipse cx="308" cy="182" rx="116" ry="24" fill="#E7EEEA"/><path d="M208 490C230 507 386 507 408 490" stroke="#A4B4AA" stroke-width="3"/><path d="M219 223V462" stroke="white" stroke-width="10"/></g>
+        <!-- 咖啡液 -->
+        ${h > 0 ? `<g clip-path="url(#fpGlassClip)"><rect x="192" y="${coffeeTop}" width="232" height="${h + 10}" fill="url(#fpCoffee)"/><ellipse cx="308" cy="${coffeeTop}" rx="112" ry="12" fill="#A1887F" opacity="0.5"/></g>` : ''}
+        <!-- 压杆 -->
+        <g id="plunger"><path d="M308 110V${discY}" stroke="#6F7C78" stroke-width="9"/><ellipse cx="308" cy="${discY}" rx="100" ry="16" fill="#AEB7AF"/><path d="M215 ${discY}H401M233 ${discY - 10}L245 ${discY + 10}M269 ${discY - 13}L281 ${discY + 14}M305 ${discY - 14}L317 ${discY + 16}M341 ${discY - 13}L353 ${discY + 13}M377 ${discY - 9}L389 ${discY + 8}" stroke="#7E8B82" stroke-width="2"/></g>
+        <!-- 金属框架 -->
+        <g id="frame" fill="#6F7C78"><path d="M188 189H201V497H188ZM415 189H428V497H415Z"/><path d="M183 491C236 502 379 502 434 491V513C382 527 235 527 183 513Z"/><path d="M190 171C195 149 421 149 426 171V187C373 202 242 202 190 187Z"/><ellipse cx="308" cy="169" rx="118" ry="24" fill="#89958E"/><path d="M284 139V121C284 96 332 96 332 121V139Z"/></g>
       </g>
-      <!-- 顶部压钮 -->
-      <circle cx="100" cy="${pressY}" r="11" fill="url(#fpMetal)" stroke="#37474F" stroke-width="1.5"/>
-      <circle cx="100" cy="${pressY}" r="5" fill="#37474F" opacity="0.5"/>
-      <!-- 壶盖 -->
-      <ellipse cx="100" cy="48" rx="42" ry="8" fill="url(#fpMetal)" stroke="#37474F" stroke-width="1.5"/>
-      <!-- 把手 -->
-      <path d="M146 62 Q172 68 172 100 Q172 130 146 136" fill="none" stroke="#546E7A" stroke-width="6" stroke-linecap="round"/>
-      <path d="M146 62 Q172 68 172 100 Q172 130 146 136" fill="none" stroke="#37474F" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-      <!-- 玻璃高光 -->
-      <path d="M66 54 Q60 110 70 168" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
     </svg>`;
   },
 
-  // 摩卡壶
+  // 摩卡壶（上壶咖啡液、加热火焰动态）
   mokaPot(coffeeLevel = 0, heating = false) {
-    const h = 42 * coffeeLevel / 100;
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
+    const h = 130 * Math.min(coffeeLevel, 100) / 100;
+    const coffeeTop = 345 - h;
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
       <defs>
-        <linearGradient id="mkMetal" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ECEFF1"/>
-          <stop offset="40%" stop-color="#B0BEC5"/>
-          <stop offset="100%" stop-color="#607D8B"/>
-        </linearGradient>
-        <linearGradient id="mkDark" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#78909C"/>
-          <stop offset="100%" stop-color="#455A64"/>
-        </linearGradient>
         <linearGradient id="mkCoffee" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#6D4C41"/>
           <stop offset="100%" stop-color="#2E1A12"/>
         </linearGradient>
+        <clipPath id="mkUpperClip"><path d="M211 190L382 178L423 210L402 349L361 375H242L200 346Z"/></clipPath>
       </defs>
       ${heating ? `
-      <ellipse cx="100" cy="188" rx="38" ry="9" fill="#FF6F00" opacity="0.55">
+      <ellipse cx="301" cy="560" rx="70" ry="16" fill="#FF6F00" opacity="0.55">
         <animate attributeName="opacity" values="0.35;0.7;0.35" dur="0.3s" repeatCount="indefinite"/>
       </ellipse>` : ''}
-      <!-- 下壶（八角形简化为梯形带圆角） -->
-      <path d="M52 128 L148 128 L142 176 Q142 184 134 184 L66 184 Q58 184 58 176 Z" fill="url(#mkMetal)" stroke="#455A64" stroke-width="2"/>
-      <ellipse cx="100" cy="128" rx="48" ry="9" fill="url(#mkDark)"/>
-      <!-- 下壶高光 -->
-      <path d="M62 132 L72 176" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
-      <!-- 安全阀 -->
-      <circle cx="138" cy="156" r="5" fill="#37474F" stroke="#263238" stroke-width="1"/>
-      <circle cx="138" cy="156" r="2" fill="#546E7A"/>
-      <!-- 粉槽漏斗 -->
-      <path d="M74 128 L126 128 L118 106 L82 106 Z" fill="#90A4AE" stroke="#546E7A" stroke-width="1.5"/>
-      <ellipse cx="100" cy="106" rx="18" ry="3.5" fill="#546E7A"/>
-      <!-- 上下壶连接处螺纹 -->
-      <rect x="72" y="100" width="56" height="10" rx="2" fill="#78909C" stroke="#455A64" stroke-width="1"/>
-      <g stroke="#455A64" stroke-width="0.8" opacity="0.7">
-        <line x1="76" y1="103" x2="124" y2="103"/>
-        <line x1="76" y1="107" x2="124" y2="107"/>
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <g id="handle"><path d="M426 198C493 177 521 194 521 233L504 326C499 351 479 364 448 360L443 332C461 336 473 327 475 311L490 235C493 217 481 213 444 225Z" fill="#6F7C78"/></g>
+        <g id="upper-chamber"><path d="M211 190L382 178L423 210L402 349L361 375H242L200 346Z" fill="#E2E7E3"/><path d="M211 190L242 215H382L423 210M242 215L258 352L242 375M382 215L361 352V375M258 352H361" stroke="#95A59A" stroke-width="3"/><path d="M226 224L243 331" stroke="#FFF" stroke-width="9"/><path d="M201 227L153 207L182 286L204 300Z" fill="#CFD8D0"/></g>
+        <!-- 上壶咖啡液 -->
+        ${h > 0 ? `<g clip-path="url(#mkUpperClip)"><rect x="195" y="${coffeeTop}" width="235" height="${h + 12}" fill="url(#mkCoffee)"/><ellipse cx="305" cy="${coffeeTop}" rx="90" ry="10" fill="#8D6E63" opacity="0.6"/></g>` : ''}
+        <g id="lid"><path d="M208 190L242 165H378L417 188L382 204H244Z" fill="#ACBAB0"/><path d="M289 164V145C289 130 326 130 326 145V164Z" fill="#6F7C78"/></g>
+        <g id="waist"><path d="M242 375H361V395H242Z" fill="#7E8B82"/></g>
+        <g id="boiler"><path d="M242 395H361L405 496L374 535H230L198 496Z" fill="#D5DDD6"/><path d="M242 395L258 407H346L361 395M258 407L245 516L230 535M346 407L359 516L374 535M245 516H359" stroke="#95A59A" stroke-width="3"/><path d="M229 435L214 489" stroke="#FFF" stroke-width="8"/><ellipse cx="379" cy="472" rx="10" ry="12" fill="#8F9B91"/><ellipse cx="379" cy="472" rx="3" ry="4" fill="#493F36" stroke="none"/></g>
       </g>
-      <!-- 上壶 -->
-      <path d="M60 100 L140 100 L134 56 Q134 46 124 46 L76 46 Q66 46 66 56 Z" fill="url(#mkMetal)" stroke="#455A64" stroke-width="2"/>
-      <!-- 上壶咖啡液 -->
-      <path d="M68 ${96 - h} L132 ${96 - h} L130 96 Q130 98 128 98 L72 98 Q70 98 70 96 Z" fill="url(#mkCoffee)"/>
-      <ellipse cx="100" cy="${96 - h}" rx="31" ry="4" fill="#8D6E63" opacity="0.6"/>
-      <!-- 上壶高光 -->
-      <path d="M68 52 L74 94" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
-      <!-- 壶盖 -->
-      <ellipse cx="100" cy="46" rx="30" ry="8" fill="url(#mkDark)" stroke="#455A64" stroke-width="1.5"/>
-      <circle cx="100" cy="37" r="8" fill="url(#mkDark)" stroke="#37474F" stroke-width="1.5"/>
-      <circle cx="100" cy="37" r="3.5" fill="#37474F" opacity="0.6"/>
-      <!-- 壶嘴 -->
-      <path d="M134 62 L158 52 L156 64 L134 72 Z" fill="url(#mkMetal)" stroke="#455A64" stroke-width="1.5"/>
-      <!-- 把手 -->
-      <path d="M60 58 Q32 64 32 96 Q32 124 60 128" fill="none" stroke="#37474F" stroke-width="7" stroke-linecap="round"/>
-      <path d="M60 58 Q32 64 32 96 Q32 124 60 128" fill="none" stroke="#546E7A" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
     </svg>`;
   },
 
-  // 虹吸壶
+  // 虹吸壶（按阶段控制水/咖啡在上下壶间转移 + 酒精灯火焰）
   siphon(waterLevel = 0, phase = 'idle') {
-    const w = 60 * waterLevel / 100;
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
+    const w = 60 * Math.min(waterLevel, 100) / 100;
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
       <defs>
-        <linearGradient id="spGlass" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
-          <stop offset="50%" stop-color="rgba(200,230,255,0.3)"/>
-          <stop offset="100%" stop-color="rgba(180,210,240,0.5)"/>
-        </linearGradient>
         <linearGradient id="spWater" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#81D4FA"/>
           <stop offset="100%" stop-color="#29B6F6"/>
@@ -480,52 +366,41 @@ const SVGTools = {
           <stop offset="0%" stop-color="#6D4C41"/>
           <stop offset="100%" stop-color="#3E2723"/>
         </linearGradient>
-        <linearGradient id="spFrame" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#8D6E63"/>
-          <stop offset="100%" stop-color="#5D4037"/>
-        </linearGradient>
+        <clipPath id="spLowerClip"><g transform="translate(60.6 62.6) scale(.8)"><circle cx="303" cy="388" r="100"/></g></clipPath>
+        <clipPath id="spUpperClip"><path d="M215 115H391L375 244C372 269 334 282 319 285V369H287V285C272 282 234 269 231 244Z"/></clipPath>
       </defs>
-      <!-- 底座 -->
-      <ellipse cx="100" cy="180" rx="52" ry="6" fill="#3E2723"/>
-      <rect x="48" y="174" width="104" height="8" rx="4" fill="url(#spFrame)" stroke="#3E2723" stroke-width="1"/>
-      <!-- 支柱 -->
-      <rect x="44" y="96" width="5" height="78" fill="url(#spFrame)"/>
-      <rect x="151" y="96" width="5" height="78" fill="url(#spFrame)"/>
-      <rect x="40" y="94" width="14" height="7" rx="2" fill="#5D4037"/>
-      <rect x="146" y="94" width="14" height="7" rx="2" fill="#5D4037"/>
-      <!-- 酒精灯 -->
-      <path d="M82 174 L118 174 L114 148 L86 148 Z" fill="#90A4AE" stroke="#546E7A" stroke-width="1.5"/>
-      <ellipse cx="100" cy="148" rx="16" ry="4" fill="#78909C"/>
-      <rect x="96" y="136" width="8" height="14" rx="2" fill="#5D4037"/>
-      ${phase === 'heating' ? `
-      <path d="M100 128 Q90 116 100 102 Q110 116 100 128" fill="#FF6F00">
-        <animate attributeName="d" values="M100 128 Q90 116 100 102 Q110 116 100 128;M100 130 Q88 118 100 100 Q112 118 100 130;M100 128 Q90 116 100 102 Q110 116 100 128" dur="0.4s" repeatCount="indefinite"/>
-      </path>
-      <path d="M100 124 Q94 115 100 108 Q106 115 100 124" fill="#FFEB3B">
-        <animate attributeName="opacity" values="0.7;1;0.7" dur="0.3s" repeatCount="indefinite"/>
-      </path>` : ''}
-      <!-- 下壶 -->
-      <path d="M54 174 Q42 138 64 118 L136 118 Q158 138 146 174 Z" fill="url(#spGlass)" stroke="rgba(120,160,200,0.6)" stroke-width="2"/>
-      <ellipse cx="100" cy="118" rx="36" ry="7" fill="rgba(180,210,240,0.3)"/>
-      <!-- 下壶水 -->
-      ${phase === 'idle' || phase === 'heating' ? `<path d="M54 174 Q42 138 64 118 L136 118 Q158 138 146 174 Z" fill="url(#spWater)" opacity="0.6"/>` : ''}
-      <!-- 下壶咖啡 -->
-      ${phase === 'descending' ? `<path d="M62 ${174 - w * 0.6} Q54 ${148 - w * 0.3} 70 ${128 - w * 0.2} L130 ${128 - w * 0.2} Q146 ${148 - w * 0.3} 138 ${174 - w * 0.6} Z" fill="url(#spCoffee)" opacity="0.75"/>` : ''}
-      <!-- 连接管 -->
-      <rect x="97" y="88" width="6" height="32" fill="rgba(180,210,240,0.4)" stroke="rgba(120,160,200,0.6)" stroke-width="1"/>
-      <!-- 滤芯 -->
-      <ellipse cx="100" cy="88" rx="11" ry="3.5" fill="#90A4AE" stroke="#546E7A" stroke-width="1"/>
-      <line x1="100" y1="88" x2="100" y2="118" stroke="#78909C" stroke-width="1.5" opacity="0.6"/>
-      <!-- 上壶 -->
-      <path d="M64 88 Q48 48 100 22 Q152 48 136 88 Z" fill="url(#spGlass)" stroke="rgba(120,160,200,0.6)" stroke-width="2"/>
-      <ellipse cx="100" cy="88" rx="36" ry="7" fill="rgba(180,210,240,0.3)"/>
-      <!-- 上壶液体 -->
-      ${(phase === 'heating' || phase === 'brewing') ? `<path d="M64 88 Q48 48 100 22 Q152 48 136 88 Z" fill="${phase === 'brewing' ? 'url(#spCoffee)' : 'url(#spWater)'}" opacity="${phase === 'brewing' ? 0.75 : 0.6}"/>` : ''}
-      <!-- 上壶粉 -->
-      ${phase === 'brewing' ? `<ellipse cx="100" cy="55" rx="23" ry="5" fill="#4E342E" opacity="0.6"/>` : ''}
-      <!-- 玻璃高光 -->
-      <path d="M60 56 Q54 78 68 100" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
-      <ellipse cx="78" cy="40" rx="6" ry="3" fill="#fff" opacity="0.3"/>
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <g id="stand" fill="#7D8981"><path d="M422 287H442V522H422Z"/><path d="M286 505H437L483 536H202L246 514Z" fill="#89958C"/><path d="M349 302H432V321H349Z"/></g>
+        <!-- 下壶 -->
+        <g id="lower-globe" transform="translate(60.6 62.6) scale(.8)"><circle cx="303" cy="388" r="100" fill="#ECF2EF" fill-opacity=".42"/><path d="M269 306V286H337V306" fill="#E5EDE8"/><path d="M218 411C244 392 362 392 388 411C374 497 232 497 218 411Z" fill="#A17A58" fill-opacity=".26" stroke="#B19B81" stroke-width="2.5"/><path d="M233 359C218 385 222 416 232 431" stroke="#FFF" stroke-width="9"/><path d="M253 470C286 487 332 487 358 470" stroke="#ADBBB1" stroke-width="3"/></g>
+        <!-- 下壶液体（水或咖啡） -->
+        ${(phase === 'idle' || phase === 'heating') ? `<g clip-path="url(#spLowerClip)"><rect x="200" y="${470 - w * 0.6}" width="210" height="${w * 0.6 + 60}" fill="url(#spWater)" opacity="0.6"/></g>` : ''}
+        ${phase === 'descending' ? `<g clip-path="url(#spLowerClip)"><rect x="200" y="${470 - w * 0.6}" width="210" height="${w * 0.6 + 60}" fill="url(#spCoffee)" opacity="0.75"/></g>` : ''}
+        <!-- 上壶 -->
+        <g id="upper-bowl"><path d="M215 115H391L375 244C372 269 334 282 319 285V369H287V285C272 282 234 269 231 244Z" fill="#EEF3F0" fill-opacity=".55"/><ellipse cx="303" cy="115" rx="88" ry="23" fill="#F9FCFA"/><ellipse cx="303" cy="115" rx="71" ry="12" fill="#DDE8E0" stroke="#AABBAE" stroke-width="2.5"/><path d="M239 146L249 229M297 297V357" stroke="#FFF" stroke-width="6"/><ellipse cx="303" cy="264" rx="43" ry="9" fill="#ABB7AB" stroke-width="3"/><path d="M303 272V332" stroke="#839181" stroke-width="3"/></g>
+        <!-- 上壶液体（水或咖啡） -->
+        ${(phase === 'heating' || phase === 'brewing') ? `<g clip-path="url(#spUpperClip)"><rect x="220" y="${150}" width="170" height="140" fill="${phase === 'brewing' ? 'url(#spCoffee)' : 'url(#spWater)'}" opacity="${phase === 'brewing' ? 0.75 : 0.6}"/></g>` : ''}
+        ${phase === 'brewing' ? `<ellipse cx="303" cy="165" rx="50" ry="10" fill="#4E342E" opacity="0.6"/>` : ''}
+        <g id="collar" fill="#C69A62"><path d="M269 286C285 279 321 279 337 286V302C321 309 285 309 269 302Z"/><path d="M337 285H391C405 285 411 311 391 311H337Z" fill="#6F7C78"/></g>
+        <!-- 酒精灯 -->
+        <g id="burner"><path d="M259 509C259 490 347 490 347 509V538C347 553 259 553 259 538Z" fill="#D9E2D8"/><ellipse cx="303" cy="509" rx="44" ry="12" fill="#EAF0E8"/><path d="M289 496V481H317V496" fill="#B7BFB2"/>
+          ${(phase === 'heating' || phase === 'brewing') ? `<path d="M303 481C289 472 297 463 307 457C308 468 316 474 303 481Z" fill="#DDB67C" stroke="#AE8656" stroke-width="3"><animate attributeName="d" values="M303 481C289 472 297 463 307 457C308 468 316 474 303 481Z;M303 483C287 474 295 461 307 455C308 469 318 476 303 483Z;M303 481C289 472 297 463 307 457C308 468 316 474 303 481Z" dur="0.4s" repeatCount="indefinite"/></path>` : `<path d="M303 481C289 472 297 463 307 457C308 468 316 474 303 481Z" fill="#DDB67C" stroke="#AE8656" stroke-width="3"/>`}
+        </g>
+      </g>
+    </svg>`;
+  },
+
+  // 意式咖啡机
+  espressoMachine() {
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <g id="housing"><path d="M133 167L155 140H488L511 167V493H133Z" fill="#CDD7CF"/><path d="M133 167H511V280H133Z" fill="#E8ECE6"/><path d="M150 280H493V464H150Z" fill="#79877E"/><path d="M165 300H478V454H165Z" fill="#A8B8AC"/><path d="M153 148H489M152 181V258" stroke="#FFF" stroke-width="6"/></g>
+        <g id="controls"><circle cx="233" cy="225" r="30" fill="#FAF8EF"/><path d="M213 238A24 24 0 0 1 253 238M233 225L246 213" stroke="#7B8A7D" stroke-width="3"/><circle cx="233" cy="225" r="4" fill="#493F36"/><rect x="299" y="204" width="89" height="40" rx="8" fill="#6F7C78"/><path d="M316 224H328M346 224H371" stroke="#D8E4D5" stroke-width="4"/><circle cx="444" cy="224" r="17" fill="#C69A62"/></g>
+        <g id="brew-head"><path d="M241 281H341V309C333 324 249 324 241 309Z" fill="#D9E1D7"/><path d="M256 319H326V338H256Z" fill="#7D8B80"/><path d="M326 319H417C430 319 430 339 417 339H326Z" fill="#493F36"/><path d="M275 339V354M307 339V354" stroke="#737E72" stroke-width="7"/><path d="M275 358V384M307 358V384" stroke="#A47A4E" stroke-width="3"/></g>
+        <g id="steam-wand"><circle cx="452" cy="286" r="13" fill="#DBE3D7"/><path d="M452 299V340L431 388" stroke="#E5EBE1" stroke-width="9"/><path d="M431 388L425 402" stroke="#493F36" stroke-width="8"/></g>
+        <g id="cup"><path d="M244 388H339V422C339 460 244 460 244 422Z" fill="#FCF8EF"/><path d="M340 399C374 389 378 428 341 430" fill="#FCF8EF"/><ellipse cx="291" cy="388" rx="47" ry="10" fill="#B18A63"/><ellipse cx="291" cy="452" rx="64" ry="9" fill="#EEE8DA"/></g>
+        <g id="drip-tray"><path d="M123 467H521V498H123Z" fill="#A4B0A4"/><path d="M143 478H501" stroke="#DDE5D9" stroke-width="7"/><path d="M173 473V486M209 473V486M245 473V486M281 473V486M317 473V486M353 473V486M389 473V486M425 473V486M461 473V486" stroke="#778477" stroke-width="3"/><path d="M155 499V516H197V499M445 499V516H487V499" fill="#6F7C78"/></g>
+      </g>
     </svg>`;
   },
 
@@ -537,7 +412,7 @@ const SVGTools = {
       case 'frenchpress': return this.frenchPress(60, 0);
       case 'moka': return this.mokaPot(50, false);
       case 'siphon': return this.siphon(50, 'idle');
-      case 'espresso': return this.mokaPot(30, false); // 暂用摩卡代替
+      case 'espresso': return this.espressoMachine();
       case 'aeropress': return this.frenchPress(40, 0); // 暂用法压代替
       case 'coldbrew': return this.server(50);
       default: return this.beans();

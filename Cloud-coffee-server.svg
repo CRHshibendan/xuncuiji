@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none">
+<title>云朵咖啡分享壶</title><desc>透明背景的玻璃咖啡分享壶矢量插画，带导流嘴、弧形把手、收腰壶身和圆润底部。</desc>
+<g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+<g id="handle"><path d="M403 242C465 215 517 231 522 280C528 333 492 382 427 392L418 363C464 354 494 323 490 286C487 256 456 252 414 274Z" fill="#E4ECE7" fill-opacity=".65"/><path d="M438 252C479 242 506 257 506 286" stroke="#FFF" stroke-width="5"/></g>
+<g id="glass-body"><path d="M229 211C232 255 215 292 189 326C164 358 145 390 151 428C159 477 204 500 310 500C416 500 461 477 469 428C475 390 456 358 431 326C405 292 388 255 391 211Z" fill="#EAF1ED" fill-opacity=".4"/>
+<path d="M244 240C241 279 224 308 203 338" stroke="#BDCEC3" stroke-width="3"/>
+<path d="M201 355C180 383 175 405 180 427C183 442 193 454 207 461" stroke="#FFF" stroke-width="10"/>
+<path d="M411 343C430 368 443 392 444 412" stroke="#B6C8BC" stroke-width="3"/>
+<path d="M191 475C248 493 373 493 431 475" stroke="#ADBEAF" stroke-width="3"/>
+</g>
+<g id="coffee"><path d="M164 413C189 391 431 391 456 413C452 458 420 481 310 481C200 481 168 458 164 413Z" fill="#A8815C" fill-opacity=".24" stroke="#B69D80" stroke-width="2.5"/><path d="M177 414C229 430 392 430 443 414" stroke="#C6AD90" stroke-width="2.5"/></g>
+<g id="rim-and-spout"><path d="M229 211C223 190 245 175 307 175C351 175 377 183 391 195L415 176L407 207C405 229 246 240 229 211Z" fill="#F8FBF8" fill-opacity=".8"/>
+<path d="M244 203C264 183 347 182 376 202C353 221 270 224 244 203Z" fill="#E2ECE5" fill-opacity=".65" stroke="#ADBEAF" stroke-width="2.5"/>
+<path d="M377 217L400 195" stroke="#ADBEAF" stroke-width="2.5"/>
+</g>
+<g id="measurement-marks" stroke="#93A993" stroke-width="3"><path d="M346 308H373M349 337H366M352 366H379"/></g>
+<g id="lid"><path d="M239 170C252 155 366 155 379 170L374 184C354 197 264 197 244 184Z" fill="#7D8C79"/><ellipse cx="309" cy="168" rx="70" ry="15" fill="#95A28D"/><path d="M261 164C280 157 338 157 357 164" stroke="#BECAB3" stroke-width="3"/></g>
+</g></svg>

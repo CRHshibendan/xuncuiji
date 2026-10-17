@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none"><title>鹅颈手冲壶</title><g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+<g id="handle"><path d="M420 249C496 216 535 244 533 307C531 367 489 402 431 392L428 361C469 369 501 342 502 304C504 267 482 253 433 280Z" fill="#6F7C78"/></g>
+<g id="spout"><path d="M211 388C149 383 134 353 128 309C119 250 121 207 93 178L68 155L83 145C132 175 145 220 151 279C156 330 167 343 221 344Z" fill="#DCE4DB"/><path d="M79 151L101 174" stroke="#A8B7AA" stroke-width="3"/><path d="M138 295C144 351 159 361 202 368" stroke="#FFF" stroke-width="5"/></g>
+<g id="body"><path d="M240 244C210 284 193 364 187 436C185 465 218 486 322 486C426 486 459 465 457 436C451 364 434 284 404 244Z" fill="#DCE4DB"/><ellipse cx="322" cy="244" rx="82" ry="23" fill="#ACBBAE"/><path d="M223 320C211 364 207 405 207 435" stroke="#FFF" stroke-width="10"/><path d="M214 464C266 479 380 479 430 464" stroke="#A6B3A5" stroke-width="3"/></g>
+<g id="lid"><path d="M239 238C245 207 399 207 405 238C374 251 270 251 239 238Z" fill="#EEF1E8"/><path d="M299 214V196C299 181 345 181 345 196V214Z" fill="#C69A62"/><path d="M306 192C315 188 332 188 338 192" stroke="#E5C69D" stroke-width="3"/></g>
+</g></svg>

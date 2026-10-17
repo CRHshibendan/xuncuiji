@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none"><title>咖啡电子秤</title><g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+<g id="feet" fill="#6F7C78"><path d="M149 442V463H199V446M441 446V463H491V442"/></g>
+<g id="body"><path d="M114 382H526V425C526 443 512 452 494 452H146C128 452 114 443 114 425Z" fill="#AAB7AA"/><path d="M149 177H491L526 382C530 402 519 414 500 414H140C121 414 110 402 114 382Z" fill="#DDE5DA"/><path d="M134 423H506" stroke="#849582" stroke-width="3"/></g>
+<g id="weighing-platform"><path d="M166 193H474L491 301C492 313 484 320 471 320H169C156 320 148 313 149 301Z" fill="#7B8B7D"/><path d="M176 207H464L477 300H163Z" fill="#91A18F" stroke="#AEBCA8" stroke-width="2.5"/><path d="M184 217H454" stroke="#C3CFB9" stroke-width="3"/></g>
+<g id="display"><rect x="178" y="342" width="284" height="49" rx="8" fill="#56685B"/><g stroke="#DDEACD" stroke-width="3.5"><path d="M201 353H211V374H201ZM219 353H229V374H219ZM243 353H253V374H243ZM261 353H271V374H261ZM227 359V360M227 368V369"/><path d="M342 353H352V374H342ZM360 353H370V374H360ZM383 353H393V374H383ZM401 353H411V374H401ZM379 374V375"/></g><path d="M320 351V380" stroke="#94A58A" stroke-width="2"/></g>
+<g id="controls"><circle cx="145" cy="367" r="13" fill="#F7F6EC"/><path d="M145 357V365M139 361A9 9 0 1 0 151 361" stroke="#697A66" stroke-width="2"/><circle cx="495" cy="367" r="13" fill="#C69A62"/><path d="M489 362H501M495 362V373" stroke="#785A3E" stroke-width="2"/></g>
+</g></svg>
