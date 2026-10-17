@@ -164,25 +164,39 @@ const BrewModule = {
     const canvas = document.getElementById('brewCanvas');
     const s = this.state;
     const skin = this.currentTool.skins.find(x => x.id === this.currentSkin) || this.currentTool.skins[0];
+    const isChemex = this.currentTool.id === 'chemex';
 
     // 秤（居中）
     const scale = this.addSVG(SVGTools.scale(s.beansWeight || 0), 'tool-scale', 0, 290, true);
     canvas.appendChild(scale);
 
-    // 称豆之后显示分享壶和滤杯
+    // 称豆之后显示器具
     if (step.id !== 'weigh') {
-      const server = this.addSVG(SVGTools.server(s.coffeeLevel || 0), 'tool-server', 0, 285, true);
-      canvas.appendChild(server);
-      const dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 175, true);
-      canvas.appendChild(dripper);
-      // 滤纸
-      const filter = this.addSVG(SVGTools.filter(), 'tool-dripper', 0, 175, true);
-      filter.style.opacity = '0.9';
-      canvas.appendChild(filter);
-      // 粉层
-      if (s.groundsLevel) {
-        const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 175, true);
-        canvas.appendChild(grounds);
+      if (isChemex) {
+        // Chemex：完整沙漏壶（含滤纸/粉层/咖啡液），无需单独分享壶
+        const che = this.addSVG(
+          SVGTools.chemexDripper(skin.dripperColor, s.coffeeLevel || 0, {
+            showFilter: true,
+            showGrounds: !!s.groundsLevel
+          }),
+          'tool-dripper', 0, 165, true
+        );
+        che.style.width = '130px';
+        che.style.height = '130px';
+        canvas.appendChild(che);
+      } else {
+        // Melitta：滤杯 + 分享壶
+        const server = this.addSVG(SVGTools.server(s.coffeeLevel || 0), 'tool-server', 0, 285, true);
+        canvas.appendChild(server);
+        const dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 175, true);
+        canvas.appendChild(dripper);
+        const filter = this.addSVG(SVGTools.filter(), 'tool-dripper', 0, 175, true);
+        filter.style.opacity = '0.9';
+        canvas.appendChild(filter);
+        if (s.groundsLevel) {
+          const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 175, true);
+          canvas.appendChild(grounds);
+        }
       }
     }
 
@@ -280,10 +294,16 @@ const BrewModule = {
       canvas.appendChild(kettle);
       s.totalWater = s.bloomWater || 30;
       const server = canvas.querySelector('.tool-server');
+      const dripper = canvas.querySelector('.tool-dripper');
       this.enablePour(kettle, canvas, (amount) => {
         s.totalWater += amount;
         const level = Math.min((s.totalWater / 240) * 100, 100);
-        if (server) server.innerHTML = SVGTools.server(level);
+        s.coffeeLevel = level;
+        if (isChemex) {
+          if (dripper) dripper.innerHTML = SVGTools.chemexDripper(skin.dripperColor, level, { showFilter: true, showGrounds: true });
+        } else if (server) {
+          server.innerHTML = SVGTools.server(level);
+        }
         if (s.totalWater >= 240) {
           setTimeout(() => this.nextStep(), 400);
           return false;
@@ -292,16 +312,26 @@ const BrewModule = {
     }
 
     if (step.id === 'finish') {
-      const dripper = canvas.querySelector('.tool-dripper');
-      if (dripper) {
-        dripper.style.cursor = 'pointer';
-        dripper.classList.add('clickable');
-        dripper.addEventListener('click', () => {
-          dripper.style.transition = 'transform 0.6s, opacity 0.6s';
-          dripper.style.transform = 'translateY(-80px)';
-          dripper.style.opacity = '0';
-          setTimeout(() => this.completeBrew(), 700);
-        });
+      if (isChemex) {
+        // Chemex：整壶直接出餐
+        const che = canvas.querySelector('.tool-dripper');
+        if (che) {
+          che.style.cursor = 'pointer';
+          che.classList.add('clickable');
+          che.addEventListener('click', () => this.completeBrew());
+        }
+      } else {
+        const dripper = canvas.querySelector('.tool-dripper');
+        if (dripper) {
+          dripper.style.cursor = 'pointer';
+          dripper.classList.add('clickable');
+          dripper.addEventListener('click', () => {
+            dripper.style.transition = 'transform 0.6s, opacity 0.6s';
+            dripper.style.transform = 'translateY(-80px)';
+            dripper.style.opacity = '0';
+            setTimeout(() => this.completeBrew(), 700);
+          });
+        }
       }
     }
   },
@@ -895,22 +925,32 @@ const BrewModule = {
     const canvas = document.getElementById('freeCanvas');
     const s = this.freeState;
     const skin = this.currentTool.skins.find(x => x.id === this.currentSkin) || this.currentTool.skins[0];
+    const isChemex = this.currentTool.id === 'chemex';
     canvas.innerHTML = '';
 
-    // 固定器具：滤杯+滤纸+分享壶（冲煮区，可拖粉进去），水平居中
-    const server = this.addSVG(SVGTools.server(0), 'tool-server', 0, 250, true);
-    canvas.appendChild(server);
-
-    const dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 120, true);
-    canvas.appendChild(dripper);
-
-    const filter = this.addSVG(SVGTools.filter(), 'tool-dripper', 0, 120, true);
-    filter.style.opacity = '0.9';
-    canvas.appendChild(filter);
-
-    if (s.dosed) {
-      const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 120, true);
-      canvas.appendChild(grounds);
+    let dripper;
+    if (isChemex) {
+      // Chemex：完整沙漏壶，含滤纸/粉层
+      dripper = this.addSVG(
+        SVGTools.chemexDripper(skin.dripperColor, 0, { showFilter: true, showGrounds: !!s.dosed }),
+        'tool-dripper', 0, 175, true
+      );
+      dripper.style.width = '130px';
+      dripper.style.height = '130px';
+      canvas.appendChild(dripper);
+    } else {
+      // Melitta：滤杯 + 分享壶 + 滤纸 + 粉层
+      const server = this.addSVG(SVGTools.server(0), 'tool-server', 0, 250, true);
+      canvas.appendChild(server);
+      dripper = this.addSVG(SVGTools.dripper(skin.dripperColor, this.currentTool.id), 'tool-dripper', 0, 120, true);
+      canvas.appendChild(dripper);
+      const filter = this.addSVG(SVGTools.filter(), 'tool-dripper', 0, 120, true);
+      filter.style.opacity = '0.9';
+      canvas.appendChild(filter);
+      if (s.dosed) {
+        const grounds = this.addSVG(SVGTools.grounds(30), 'tool-dripper', 0, 120, true);
+        canvas.appendChild(grounds);
+      }
     }
 
     // 秤（可拖动），居中
@@ -1012,7 +1052,15 @@ const BrewModule = {
       });
     } else if (!s.poured) {
       // 已加热：enableKettlePour 自带拖拽
-      this.enableKettlePour(kettle, dripper, server, canvas);
+      const skin = this.currentTool.skins.find(x => x.id === this.currentSkin) || this.currentTool.skins[0];
+      this.enableKettlePour(kettle, dripper, canvas, (level) => {
+        if (isChemex) {
+          dripper.innerHTML = SVGTools.chemexDripper(skin.dripperColor, level, { showFilter: true, showGrounds: true });
+        } else {
+          const server = canvas.querySelector('.tool-server');
+          if (server) server.innerHTML = SVGTools.server(level);
+        }
+      });
     } else {
       this.enableDrag(kettle);
     }
@@ -1107,7 +1155,7 @@ const BrewModule = {
   },
 
   // 水壶自由拖动注水：倒到滤杯里算注水，浇到客人头上会被骂
-  enableKettlePour(kettle, dripper, server, canvas) {
+  enableKettlePour(kettle, dripper, canvas, onLevelChange) {
     const s = this.freeState;
     let dragging = false;
     let pouring = false;
@@ -1220,7 +1268,7 @@ const BrewModule = {
         if (overDripper) {
           s.pouredWater = (s.pouredWater || 0) + 4;
           const level = Math.min((s.pouredWater / s.water) * 100, 100);
-          if (server) server.innerHTML = SVGTools.server(level);
+          if (onLevelChange) onLevelChange(level);
           if (s.pouredWater >= s.water) {
             s.poured = true;
             stopPour();

@@ -4,101 +4,125 @@
 
 const SVGTools = {
   // 滤杯：type='melitta'（梯形陶瓷）或 'chemex'（玻璃漏斗+木领）
-  dripper(color = '#FF7043', type = 'melitta') {
-    if (type === 'chemex') return this.chemexDripper(color);
+  dripper(color = '#FF7043', type = 'melitta', level = 0, opts = {}) {
+    if (type === 'chemex') return this.chemexDripper(color, level, opts);
     return this.melittaDripper(color);
   },
 
-  // Melitta 梯形陶瓷滤杯
+  // Melitta 梯形陶瓷滤杯（带把手、肋骨、承托底座）
   melittaDripper(color) {
-    const light = this.lighten(color, 30);
-    const dark = this.darken(color, 15);
-    const darker = this.darken(color, 28);
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
-      <defs>
-        <linearGradient id="meltGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="${light}"/>
-          <stop offset="40%" stop-color="${color}"/>
-          <stop offset="100%" stop-color="${dark}"/>
-        </linearGradient>
-        <radialGradient id="meltInner" cx="50%" cy="30%" r="70%">
-          <stop offset="0%" stop-color="${this.lighten(color, 15)}"/>
-          <stop offset="100%" stop-color="${darker}"/>
-        </radialGradient>
-        <linearGradient id="meltBase" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="${dark}"/>
-          <stop offset="100%" stop-color="${darker}"/>
-        </linearGradient>
-      </defs>
-      <!-- 杯身梯形（上宽下窄） -->
-      <path d="M42 38 L158 38 L142 148 L58 148 Z" fill="url(#meltGrad)" stroke="${dark}" stroke-width="2"/>
-      <!-- 杯口椭圆（厚边） -->
-      <ellipse cx="100" cy="38" rx="58" ry="12" fill="${light}" stroke="${dark}" stroke-width="2"/>
-      <ellipse cx="100" cy="38" rx="50" ry="8.5" fill="url(#meltInner)"/>
-      <!-- 内壁竖直凸肋 -->
-      <g stroke="${darker}" stroke-width="1.5" opacity="0.35" fill="none" stroke-linecap="round">
-        <path d="M60 48 L57 143"/>
-        <path d="M71 44 L69 146"/>
-        <path d="M82 42 L82 147"/>
-        <path d="M100 40 L100 148"/>
-        <path d="M118 42 L118 147"/>
-        <path d="M129 44 L131 146"/>
-        <path d="M140 48 L143 143"/>
+    const body = this.lighten(color, 55);
+    const bodyDark = this.lighten(color, 40);
+    const rim = this.lighten(color, 62);
+    const rimInner = this.lighten(color, 48);
+    const stroke = this.darken(color, 30);
+    const rib = this.darken(color, 18);
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 把手 -->
+        <g id="handle">
+          <path d="M464 237C503 219 550 235 553 275C556 316 517 355 463 362L451 331C492 326 520 302 518 279C517 257 495 255 475 269Z" fill="${body}"/>
+        </g>
+        <!-- 底座 -->
+        <g id="base">
+          <path d="M195 445V460C195 480 445 480 445 460V445Z" fill="${bodyDark}"/>
+          <ellipse cx="320" cy="445" rx="125" ry="22" fill="${rim}"/>
+          <path d="M276 411V441C289 452 351 452 364 441V411" fill="${body}"/>
+        </g>
+        <!-- 杯身 -->
+        <g id="body">
+          <path d="M130 185L241 411C250 431 390 431 399 411L510 185Z" fill="${body}"/>
+          <path d="M147 218L250 410C255 422 385 422 390 410L493 218" stroke="${rib}" stroke-width="3"/>
+          <g stroke="${rib}" stroke-width="3">
+            <path d="M180 245L264 403"/>
+            <path d="M232 258L287 409"/>
+            <path d="M290 265L309 412"/>
+            <path d="M350 265L331 412"/>
+            <path d="M408 258L353 409"/>
+            <path d="M460 245L376 403"/>
+          </g>
+        </g>
+        <!-- 杯口 -->
+        <g id="rim">
+          <ellipse cx="320" cy="185" rx="190" ry="65" fill="${rim}"/>
+          <ellipse cx="320" cy="185" rx="172" ry="49" fill="${rimInner}" stroke="${stroke}" stroke-width="3"/>
+          <path d="M179 204L268 220M226 223L291 230M290 233L309 236M350 233L331 236M414 223L349 230M461 204L372 220" stroke="${rib}" stroke-width="2.5"/>
+          <path d="M197 160C260 135 378 135 442 159" stroke="#FFFFFF" stroke-width="6"/>
+        </g>
+        <!-- 细节 -->
+        <g id="details" stroke="${stroke}" stroke-width="2.5">
+          <path d="M282 454C305 457 335 457 358 454"/>
+          <path d="M260 394C270 402 370 402 380 394"/>
+        </g>
       </g>
-      <!-- 平底 -->
-      <ellipse cx="100" cy="148" rx="42" ry="9" fill="url(#meltBase)" stroke="${dark}" stroke-width="1.5"/>
-      <!-- 单孔 -->
-      <ellipse cx="100" cy="148" rx="11" ry="3.2" fill="#1A120D"/>
-      <!-- 底座圈 -->
-      <path d="M64 148 L136 148 L132 162 L68 162 Z" fill="${dark}" stroke="${darker}" stroke-width="1.5"/>
-      <ellipse cx="100" cy="162" rx="32" ry="5" fill="${darker}"/>
-      <!-- 陶瓷高光 -->
-      <path d="M52 46 Q46 95 60 145" fill="none" stroke="${this.lighten(color, 40)}" stroke-width="3.5" opacity="0.5" stroke-linecap="round"/>
-      <ellipse cx="80" cy="55" rx="12" ry="4" fill="#fff" opacity="0.25"/>
     </svg>`;
   },
 
-  // Chemex 滤杯上半部（玻璃漏斗 + 木领 + 皮绳）
-  chemexDripper(color) {
-    const glass = 'rgba(220, 240, 255, 0.35)';
+  // Chemex 完整沙漏壶（玻璃漏斗+木领+皮绳+下壶），可含咖啡液、滤纸、粉层
+  chemexDripper(color, level = 0, opts = {}) {
+    const { showFilter = false, showGrounds = false } = opts;
+    const glass = 'rgba(220, 240, 255, 0.36)';
     const glassEdge = 'rgba(140, 180, 210, 0.7)';
-    const wood = '#8D6E63';
-    const woodDark = '#5D4037';
-    const woodLight = '#A1887F';
-    return `<svg viewBox="0 0 200 200" class="svg-tool">
+    const wood = '#C69A62';
+    const woodDark = '#967044';
+    const woodLight = '#E4C398';
+    const fillH = 215 * Math.min(level, 100) / 100;
+    const coffeeTop = 565 - fillH;
+    const bodyPath = 'M166 145C183 191 228 240 268 286C282 303 280 321 265 342C230 391 170 436 166 493C162 541 198 565 320 565C442 565 478 541 474 493C470 436 410 391 375 342C360 321 358 303 372 286C412 240 457 191 474 145Z';
+    return `<svg viewBox="0 0 640 640" class="svg-tool">
       <defs>
-        <linearGradient id="cheGlass" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
-          <stop offset="50%" stop-color="${glass}"/>
-          <stop offset="100%" stop-color="rgba(180,210,235,0.5)"/>
+        <linearGradient id="cheCoffee" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#8D6E63"/>
+          <stop offset="100%" stop-color="#3E2723"/>
         </linearGradient>
-        <linearGradient id="cheWood" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="${woodLight}"/>
-          <stop offset="50%" stop-color="${wood}"/>
-          <stop offset="100%" stop-color="${woodDark}"/>
-        </linearGradient>
+        <clipPath id="cheBodyClip"><path d="${bodyPath}"/></clipPath>
       </defs>
-      <!-- 玻璃漏斗（上宽下窄的锥形） -->
-      <path d="M52 30 L148 30 L128 110 L72 110 Z" fill="url(#cheGlass)" stroke="${glassEdge}" stroke-width="2"/>
-      <!-- 杯口 -->
-      <ellipse cx="100" cy="30" rx="48" ry="10" fill="rgba(255,255,255,0.4)" stroke="${glassEdge}" stroke-width="2"/>
-      <ellipse cx="100" cy="30" rx="40" ry="7" fill="rgba(200,225,245,0.3)"/>
-      <!-- 漏斗内壁斜线（玻璃厚度） -->
-      <path d="M58 38 L142 38" stroke="${glassEdge}" stroke-width="1" opacity="0.5"/>
-      <!-- 木领（Chemex 标志性木质把手，在漏斗底部） -->
-      <rect x="62" y="108" width="76" height="20" rx="3" fill="url(#cheWood)" stroke="${woodDark}" stroke-width="1.5"/>
-      <!-- 木领上的皮绳 -->
-      <path d="M78 108 L78 128" stroke="#5D4037" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M122 108 L122 128" stroke="#5D4037" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="100" cy="118" r="5" fill="none" stroke="#6D4C41" stroke-width="2"/>
-      <!-- 木领高光 -->
-      <rect x="66" y="110" width="68" height="3" rx="1.5" fill="${woodLight}" opacity="0.7"/>
-      <!-- 漏斗底颈（接下壶的部分） -->
-      <rect x="88" y="128" width="24" height="16" fill="url(#cheGlass)" stroke="${glassEdge}" stroke-width="1.5"/>
-      <ellipse cx="100" cy="144" rx="12" ry="3" fill="rgba(180,210,235,0.4)"/>
-      <!-- 玻璃高光 -->
-      <path d="M58 38 Q52 72 72 108" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linecap="round"/>
-      <ellipse cx="78" cy="50" rx="8" ry="3" fill="#fff" opacity="0.3"/>
+      <g stroke="#493F36" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+        <g id="glass-body">
+          <path d="${bodyPath}" fill="${glass}" fill-opacity="0.36"/>
+          <path d="M188 164C214 212 246 251 280 286M452 164C426 212 394 251 360 286" stroke="#B6C7C2" stroke-width="3"/>
+          <!-- 咖啡液（裁剪在壶身内） -->
+          ${fillH > 0 ? `<g clip-path="url(#cheBodyClip)">
+            <rect x="160" y="${coffeeTop}" width="320" height="${fillH + 8}" fill="url(#cheCoffee)"/>
+            <ellipse cx="320" cy="${coffeeTop}" rx="95" ry="9" fill="#6D4C41" opacity="0.45"/>
+          </g>` : ''}
+          <path d="M267 365C229 411 198 450 194 487C190 512 201 526 225 535" stroke="#FFFFFF" stroke-width="10"/>
+          <path d="M398 400C424 431 446 462 448 491" stroke="#BBCBC5" stroke-width="3"/>
+          <path d="M201 542C254 557 387 557 439 542" stroke="#AEBFB8" stroke-width="3"/>
+          <path d="M416 467H432M422 492H438" stroke="#9FAEA7" stroke-width="3"/>
+        </g>
+        <!-- 滤纸（上壶漏斗内） -->
+        ${showFilter ? `<g id="filter" opacity="0.92">
+          <path d="M190 160C215 205 245 240 278 272C296 289 296 305 278 322C242 360 210 395 205 430 L435 430C430 395 398 360 362 322C344 305 344 289 362 272C395 240 425 205 450 160 Z" fill="#FFFEF7" stroke="#D8CFBC" stroke-width="2"/>
+          <path d="M320 165 L320 425" stroke="#C8BEA8" stroke-width="1.2" stroke-dasharray="3 4"/>
+        </g>` : ''}
+        <!-- 咖啡粉层 -->
+        ${showGrounds ? `<g id="grounds" clip-path="url(#cheBodyClip)">
+          <ellipse cx="320" cy="230" rx="100" ry="14" fill="#5D4037"/>
+          <ellipse cx="320" cy="226" rx="92" ry="10" fill="#6D4C41"/>
+        </g>` : ''}
+        <g id="rim-and-spout">
+          <path d="M474 145C474 119 404 99 320 99C235 99 166 119 166 145C166 171 235 191 320 191C389 191 446 178 468 158L494 132C483 132 478 137 474 145Z" fill="#F9FCFA" fill-opacity="0.85"/>
+          <path d="M183 145C211 117 413 114 454 143C429 166 370 176 320 176C261 176 210 165 183 145Z" fill="#E6EEEA" fill-opacity="0.65" stroke="#A7BAB0" stroke-width="2.5"/>
+          <path d="M432 175C447 167 458 158 466 148" stroke="#A7BAB0" stroke-width="2.5"/>
+        </g>
+        <g id="wood-collar">
+          <path d="M258 280C291 290 349 290 382 280L374 303C368 321 373 339 383 356C348 367 292 367 257 356C267 339 272 321 266 303Z" fill="${wood}"/>
+          <path d="M320 289V363" stroke="${woodDark}" stroke-width="3"/>
+          <g stroke="#A87D4B" stroke-width="2">
+            <path d="M278 299C291 303 302 304 309 304M332 304C343 304 352 303 363 300"/>
+            <path d="M275 342C289 347 299 347 309 348M332 348C343 348 353 347 365 343"/>
+          </g>
+          <path d="M272 291C295 296 306 296 311 296" stroke="${woodLight}" stroke-width="3"/>
+        </g>
+        <g id="leather-tie" stroke="#684832" stroke-width="4">
+          <path d="M263 317C299 325 342 325 377 317"/>
+          <path d="M263 325C299 333 342 333 377 325"/>
+          <path d="M326 328C346 345 357 365 357 391C358 409 366 421 376 427M321 332C324 360 316 379 321 396C326 414 321 430 311 439"/>
+          <path d="M317 323C308 302 293 300 289 308C285 319 300 326 317 323ZM325 323C336 302 352 302 354 312C356 323 340 328 325 323Z" fill="#DAC2A5" stroke-width="3"/>
+          <ellipse cx="322" cy="328" rx="11" ry="14" fill="#AC794B" stroke-width="3"/>
+        </g>
+      </g>
     </svg>`;
   },
 
